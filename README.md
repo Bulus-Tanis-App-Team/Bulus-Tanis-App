@@ -20,7 +20,7 @@
   <li>
       <h3 color="Red">Proje Ayağa Kaldırma Adımları:</h3>
       <ul>
-        <li>n<strong>npm</strong> paket yöneticisine ihtiyacımız var. Node.js web sitesinden npm paket yöneticisini kurun.</li>
+        <li><strong>npm</strong> paket yöneticisine ihtiyacımız var. Node.js web sitesinden npm paket yöneticisini kurun.</li>
         <li>Proje dosyalarınız olduğu klasör dizinine gidin ve orda komut terminali açın</li>
         <li>npm install komutunu çalıştırın.</li>
         <li>npm run serve komutunu çalıştırın</li>     

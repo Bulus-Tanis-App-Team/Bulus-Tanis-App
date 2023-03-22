@@ -3,7 +3,7 @@
 İnsalarlarla gerçek zamanlı sohbet edebileceğiniz ve konuma göre filtre uygulayarak belirli bir bölgedeki kullanıcılarla iletişime geçmenizi sağlayacak bir mesajlaşma uygulaması.
 
 <h3 align="center" color="Darkblue">3. Sınıf Bahar Dönemi Yazılım Mühendisliği Dersi Proje Ödevi</h5>
-<h4 align="center" ><a href="http://program-link-ornek.com/" color="Purple">Programı Kullanmak İçin Tıklayınız</a></h6>
+<h4 align="center" ><a href="http://program-link-ornek.com" color="Purple">Programı Kullanmak İçin Tıklayınız</a></h6>
 
 <ol>
   <li>

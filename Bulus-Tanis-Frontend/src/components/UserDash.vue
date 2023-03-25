@@ -8,6 +8,31 @@
 
   <div class="row  g-0 z bg-danger">
     <div class="col-3 all-user shadow-lg p-3">
+	
+	 <div >
+            <button type="button" data-toggle="modal" class="btn btn-primary konumara-btn" data-target="#modalsearch" > Konum Ara</button>
+      </div>
+
+<div class="modal" id="modalsearch" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Modal body text goes here.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+ 
       <div class="text-center mb-2 p-0"><h3>Chat List</h3></div>
       <all-user
         v-for="result in results"
@@ -253,6 +278,13 @@ export default {
   margin-top: 10px;
   float: right;
 }
+.konumara-btn{
+    position:relative;
+    left: +170px;
+   
+
+}
+
 .inpt {
   border: 0;
   margin-bottom: 15px;

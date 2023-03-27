@@ -21,7 +21,10 @@
 				</div>
 			</div>
 			<div class="right col-6" >
-				<div class="right-text">
+        <div>
+          <img class="logoresim" src="../assets/logo2.png" alt="Logo">
+        </div>
+        <div class="right-text">
 					<h2>Buluş & Tanış</h2>
 					<h5>Hayatına Anlam Kat</h5>
 				</div>
@@ -43,6 +46,7 @@ export default {
   methods:{
     async login(){ 
       // alert()
+      
       await fetch(
         "https://localhost:44313/api/login/user",
         {
@@ -52,10 +56,7 @@ export default {
             },
             body: JSON.stringify({
             Email: this.Email,
-            
-            
             }),
-        
         }
       )     
       .then((response)=>{
@@ -76,10 +77,19 @@ export default {
       );
       // console.log(this.loggedPersonMail)          
     }
+
   }
 }
 </script>
-<style scoped>  
+<style scoped>
+
+ .logoresim{
+    position:absolute;
+    left:225px;
+    top:50px;
+    width:200px; 
+    height:200px;
+  }
  .login {
     height: 100vh;
     width: 100%;
@@ -244,5 +254,6 @@ export default {
   padding: 25px 25px;
   
 }
+
 }
 </style>

@@ -17,6 +17,9 @@
 				</div>
 			</div>
 			<div class="right col-6" >
+        <div>
+          <img class="logoresim" src="../assets/logo2.png" alt="Logo">
+          </div>
 				<div class="right-text">
 					<h2>BEE CHAT</h2>
 					<h5>Express Your Thoughts</h5>
@@ -80,7 +83,13 @@ export default {
 </script>
 
 <style scoped>
-
+.logoresim{
+    position:absolute;
+    left:170px;
+    top:50px;
+    width:200px; 
+    height:200px;
+}
 .login {
     height: 100vh;
     width: 100%;

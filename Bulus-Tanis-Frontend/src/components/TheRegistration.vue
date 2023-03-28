@@ -7,19 +7,24 @@
 				<div class="top_link"><a href="#"><img src="https://drive.google.com/u/0/uc?id=16U__U5dJdaTfNGobB_OpwAJ73vM50rPV&export=download" alt="">Return home</a></div>
 				<div class="contact">
 					<form action=""  @submit.prevent="register">
-						<h3>JOIN BEE CHAT</h3>
-						<input type="text" placeholder="FIRST NAME" v-model="FirstName">
-						<input type="text" placeholder="LAST NAME" v-model="LastName">
-						<input type="text" placeholder="EMAIL" v-model="Email">
-                        <h5 v-if="successful" class="text-success">Registration Successful</h5>
-						<button class="submit">LET'S GO</button>
+						<h3>Buluş & Tanış'a Katılın</h3>
+						<input type="text" placeholder="İsim" v-model="FirstName">
+						<input type="text" placeholder="Soy İsim" v-model="LastName">
+						<input type="text" placeholder="E-mail" v-model="Email">
+            <input type="password" placeholder="Şifre" v-model="Password">
+            <input type="text" placeholder="Ülke" v-model="Country">
+            <input type="text" placeholder="Şehir" v-model="City">
+            <input type="text" placeholder="İlçe" v-model="District">
+            <input type="text" placeholder="Mahalle" v-model="Neighbourhood">
+            <h5 v-if="successful" class="text-success">Kayıt Başarılı</h5>
+						<button class="submit">Kayıt Ol</button>
 					</form>
 				</div>
 			</div>
 			<div class="right col-6" >
 				<div class="right-text">
-					<h2>BEE CHAT</h2>
-					<h5>Express Your Thoughts</h5>
+					<h2>Buluş & Tanış</h2>
+					<h5>Hayatına Anlam Kat</h5>
 				</div>
 			</div>
 		</div>
@@ -35,6 +40,11 @@ export default {
           FirstName:"",
           LastName:"", 
           Email:"",
+          Password:"",
+          Country:"",
+          City:"",
+          District:"",
+          Neighbourhood:"",
           successful:false,
           clicked:false,
         }
@@ -130,7 +140,7 @@ export default {
 .left input {
     border: none;
     width: 80%;
-    margin: 15px 0px;
+    margin: 1px 5px;
     border-bottom: 1px solid #4f30677d;
     padding: 7px 9px;
     width: 100%;
@@ -148,7 +158,7 @@ export default {
     border-radius: 8px;
     display: block;
     margin: auto;
-    margin-top: 120px;
+    margin-top: 50px;
     background: #583672;
     color: #fff;
     font-weight: bold;
@@ -199,7 +209,9 @@ export default {
     padding-right: 7px;
     margin-top: -3px;
 }
-
+.submit:hover{
+  background:linear-gradient(rgba(242, 57, 127, 0.7) , rgba(175, 70, 189, 0.71) 100%);
+}
 @media only screen and (max-width: 480px) {
     html {
     font-size: 50.5%;

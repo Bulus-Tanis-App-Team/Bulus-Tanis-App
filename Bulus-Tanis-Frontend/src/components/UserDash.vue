@@ -9,30 +9,44 @@
   <div class="row  g-0 z bg-danger">
     <div class="col-3 all-user shadow-lg p-3">
 	
-	 <div >
-            <button type="button" data-toggle="modal" class="btn btn-primary konumara-btn" data-target="#modalsearch" > Konum Ara</button>
-      </div>
-
-<div class="modal" id="modalsearch" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <p>Modal body text goes here.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Save changes</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
+	<div>
+  <button type="button" class="btn btn-primary konumara-btn" data-bs-toggle="modal" data-bs-target="#modalsearch" >Konum Ara</button>
   </div>
+
+<div class="modal fade" id="modalsearch" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title" id="exampleModalLabel">Konum Ara</h5>
+<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
- 
+<div class="modal-body">
+
+<form>
+  <label for="name">Ülke:</label>
+  <input type="text" id="name" name="name"><br>
+
+  <label for="email">Şehir:</label>
+  <input type="text" id="email" name="email"><br>
+  
+  <label for="phone">İlçe:</label>
+  <input type="text" id="phone" name="phone"><br>
+
+  <label for="name">Mahalle:</label>
+  <input type="text" id="name" name="name"><br>
+  
+  <button type="submit">Ara</button>
+</form>
+
+
+</div>
+<div class="modal-footer">
+
+</div>
+</div>
+</div>
+</div>
+
       <div class="text-center mb-2 p-0"><h3>Chat List</h3></div>
       <all-user
         v-for="result in results"
@@ -321,4 +335,45 @@ img {
   background-position: center center;
   height: 100vh;
 }
+
+form {
+  font-family: Arial, sans-serif;
+  width: 400px;
+  padding: 20px;
+  background-color: #f2f2f2;
+  border-radius: 5px;
+  margin: 0 auto;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+input[type=text], input[type=email], input[type=tel],input[type=message] {
+  width: 100%;
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+  margin-bottom: 10px;
+}
+
+button[type=submit] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+button[type=submit]:hover {
+  background-color: #45a049;
+
+}
+
+
+
 </style>

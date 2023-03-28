@@ -8,42 +8,26 @@
 
   <div class="row  g-0 z bg-danger">
     <div class="col-3 all-user shadow-lg p-3">
-<<<<<<< HEAD
-	
-	<div>
+
+  <div>
   <button type="button" class="btn btn-primary konumara-btn" data-bs-toggle="modal" data-bs-target="#modalsearch" >Konum Ara</button>
   </div>
-=======
-<div>
-<button type="button" class="btn btn-primary konumara-btn" data-bs-toggle="modal" data-bs-target="#modalsearch" >Konum Ara</button>
-</div>
->>>>>>> c6b0bb7ffe64a9b99950662e1694d3029e352559
 
-<div class="modal fade" id="modalsearch" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-<div class="modal-dialog">
-<div class="modal-content">
-<div class="modal-header">
-<<<<<<< HEAD
-<h5 class="modal-title" id="exampleModalLabel">Konum Ara</h5>
-<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-=======
-<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-</div>
-<div class="modal-body">
-...
-</div>
-<div class="modal-footer">
-<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-<button type="button" class="btn btn-primary">Save changes</button>
-</div>
-</div>
-</div>
->>>>>>> c6b0bb7ffe64a9b99950662e1694d3029e352559
-</div>
-<div class="modal-body">
 
-<form>
+    <div class="modal fade" id="modalsearch"    tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+    <div class="modal-content">
+    <div class="modal-header">
+
+    <h5 class="modal-title" id="exampleModalLabel">Konum Ara</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    
+    
+    
+    </div>
+    <div class="modal-body">
+    
+    <form>
   <label for="name">Ülke:</label>
   <input type="text" id="name" name="name"><br>
 
@@ -57,16 +41,16 @@
   <input type="text" id="name" name="name"><br>
   
   <button type="submit">Ara</button>
-</form>
+  </form>
 
 
-</div>
-<div class="modal-footer">
+    </div>
+    
+    </div>
+    </div>
 
-</div>
-</div>
-</div>
-</div>
+    </div>
+
 
       <div class="text-center mb-2 p-0"><h3>Chat List</h3></div>
       <all-user
@@ -93,7 +77,7 @@
           class="shadow-lg bg-white rounded-pill mt-1 me-1 ps-3 pe-3"
           ><b>{{ chatterName }}</b></span
         >
-        <button @click="logout" type="button" class="btn btn-danger">Logout</button>
+        <button @click="logout" type="button" class="btn btn-danger">Çıkış</button>
         </div>
 
        <div  v-if="chatterName">
@@ -121,7 +105,7 @@
             />
           </div>
           <div>
-            <button type="submit" class="btn btn-primary send-btn">Send</button>
+            <button type="submit" class="btn btn-primary send-btn">Gönder</button>
           </div>
         </div>
       </form>
@@ -316,10 +300,7 @@ export default {
 .konumara-btn{
     position:relative;
     left: +170px;
-   
-
 }
-
 .inpt {
   border: 0;
   margin-bottom: 15px;
@@ -394,7 +375,6 @@ button[type=submit]:hover {
   background-color: #45a049;
 
 }
-
 
 
 </style>

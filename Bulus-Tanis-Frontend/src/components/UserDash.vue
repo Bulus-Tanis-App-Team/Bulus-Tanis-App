@@ -8,6 +8,50 @@
 
   <div class="row  g-0 z bg-danger">
     <div class="col-3 all-user shadow-lg p-3">
+
+  <div>
+  <button type="button" class="btn btn-primary konumara-btn" data-bs-toggle="modal" data-bs-target="#modalsearch" >Konum Ara</button>
+  </div>
+
+
+    <div class="modal fade" id="modalsearch"    tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+    <div class="modal-content">
+    <div class="modal-header">
+
+    <h5 class="modal-title" id="exampleModalLabel">Konum Ara</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    
+    
+    
+    </div>
+    <div class="modal-body">
+    
+    <form>
+  <label for="name">Ülke:</label>
+  <input type="text" id="name" name="name"><br>
+
+  <label for="email">Şehir:</label>
+  <input type="text" id="email" name="email"><br>
+  
+  <label for="phone">İlçe:</label>
+  <input type="text" id="phone" name="phone"><br>
+
+  <label for="name">Mahalle:</label>
+  <input type="text" id="name" name="name"><br>
+  
+  <button type="submit">Ara</button>
+  </form>
+
+
+    </div>
+    
+    </div>
+    </div>
+
+    </div>
+
+
       <div class="text-center mb-2 p-0"><h3>Chat List</h3></div>
       <all-user
         v-for="result in results"
@@ -33,7 +77,7 @@
           class="shadow-lg bg-white rounded-pill mt-1 me-1 ps-3 pe-3"
           ><b>{{ chatterName }}</b></span
         >
-        <button @click="logout" type="button" class="btn btn-danger">Logout</button>
+        <button @click="logout" type="button" class="btn btn-danger">Çıkış</button>
         </div>
 
        <div  v-if="chatterName">
@@ -61,7 +105,7 @@
             />
           </div>
           <div>
-            <button type="submit" class="btn btn-primary send-btn">Send</button>
+            <button type="submit" class="btn btn-primary send-btn">Gönder</button>
           </div>
         </div>
       </form>
@@ -253,6 +297,10 @@ export default {
   margin-top: 10px;
   float: right;
 }
+.konumara-btn{
+    position:relative;
+    left: +170px;
+}
 .inpt {
   border: 0;
   margin-bottom: 15px;
@@ -289,4 +337,44 @@ img {
   background-position: center center;
   height: 100vh;
 }
+
+form {
+  font-family: Arial, sans-serif;
+  width: 400px;
+  padding: 20px;
+  background-color: #f2f2f2;
+  border-radius: 5px;
+  margin: 0 auto;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+input[type=text], input[type=email], input[type=tel],input[type=message] {
+  width: 100%;
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+  margin-bottom: 10px;
+}
+
+button[type=submit] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+button[type=submit]:hover {
+  background-color: #45a049;
+
+}
+
+
 </style>

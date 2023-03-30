@@ -9,48 +9,115 @@
   <div class="row  g-0 z bg-danger">
     <div class="col-3 all-user shadow-lg p-3">
 
-  <div>
+      <div>
   <button type="button" class="btn btn-primary konumara-btn" data-bs-toggle="modal" data-bs-target="#modalsearch" >Konum Ara</button>
-  </div>
+</div>
 
+<div>
+  <button type="button" class="btn btn-primary profile-btn" data-bs-toggle="modal" data-bs-target="#modalprofile" >Profil</button>
+</div>
 
-    <div class="modal fade" id="modalsearch"    tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+<div class="modal fade" id="modalsearch" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
     <div class="modal-content">
-    <div class="modal-header">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Konum Ara</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <label for="country">Ülke:</label>
+          <input type="text" id="country" name="country"><br>
 
-    <h5 class="modal-title" id="exampleModalLabel">Konum Ara</h5>
-    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-    
-    
-    
+          <label for="city">Şehir:</label>
+          <input type="text" id="city" name="city"><br>
+
+          <label for="district">İlçe:</label>
+          <input type="text" id="district" name="district"><br>
+
+          <label for="neighborhood">Mahalle:</label>
+          <input type="text" id="neighborhood" name="neighborhood"><br>
+
+          <button type="submit">Ara</button>
+        </form>
+      </div>
+      <div class="modal-footer"></div>
     </div>
-    <div class="modal-body">
-    
-    <form>
-  <label for="name">Ülke:</label>
-  <input type="text" id="name" name="name"><br>
+  </div>
+</div>
 
-  <label for="email">Şehir:</label>
-  <input type="text" id="email" name="email"><br>
-  
-  <label for="phone">İlçe:</label>
-  <input type="text" id="phone" name="phone"><br>
+<!-- Profile modal -->
+<div class="modal fade" id="modalprofile" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Profil</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <label for="name">Profil İsmi:</label>
+          <input type="text" id="name" name="name" value="<?php echo $profile['name']; ?>"><br>
 
-  <label for="name">Mahalle:</label>
-  <input type="text" id="name" name="name"><br>
-  
-  <button type="submit">Ara</button>
-  </form>
+          <label for="country">Ülke:</label>
+          <input type="text" id="country" name="country" value="<?php echo $profile['country']; ?>"><br>
 
+          <label for="city">Şehir:</label>
+          <input type="text" id="city" name="city" value="<?php echo $profile['city']; ?>"><br>
 
+          <label for="district">İlçe:</label>
+          <input type="text" id="district" name="district" value="<?php echo $profile['district']; ?>"><br>
+
+          <label for="neighborhood">Mahalle:</label>
+          <input type="text" id="neighborhood" name="neighborhood" value="<?php echo $profile['neighborhood']; ?>"><br>
+
+          <button type="submit">Kaydet</button>
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalupdate">Değişiklik Yap</button>
+        </form>
+      </div>
+      <div class="modal-footer"></div>
     </div>
-    
-    </div>
-    </div>
+  </div>
+</div>
 
-    </div>
 
+<!-- Update modal -->
+<div class="modal fade" id="modalupdate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Profil Değişiklik Yap</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <label for="name">Profil İsmi:</label>
+          <input type="text" id="name" name="name"><br>
+
+          <label for="country">Ülke:</label>
+          <input type="text" id="country" name="country"><br>
+
+          <label for="city">Şehir:</label>
+          <input type="text" id="city" name="city"><br>
+
+          <label for="district">İlçe:</label>
+          <input type="text" id="district" name="district"><br>
+
+          <label for="neighborhood">Mahalle:</label>
+          <input type="text" id="neighborhood" name="neighborhood"><br>
+
+          <div class="mb-3">
+            <label for="image" class="form-label">Profil Resmi:</label>
+            <input class="form-control" type="file" id="image" name="image">
+          </div>
+
+          <button type="submit">Kaydet</button>
+        </form>
+      </div>
+      <div class="modal-footer"></div>
+    </div>
+  </div>
+</div>
 
       <div class="text-center mb-2 p-0"><h3>Chat List</h3></div>
       <all-user
@@ -77,7 +144,7 @@
           class="shadow-lg bg-white rounded-pill mt-1 me-1 ps-3 pe-3"
           ><b>{{ chatterName }}</b></span
         >
-        <button @click="logout" type="button" class="btn btn-danger">Çıkış</button>
+        <button @click="logout" type="button" class="btn btn-danger">Logout</button>
         </div>
 
        <div  v-if="chatterName">
@@ -105,7 +172,7 @@
             />
           </div>
           <div>
-            <button type="submit" class="btn btn-primary send-btn">Gönder</button>
+            <button type="submit" class="btn btn-primary send-btn">Send</button>
           </div>
         </div>
       </form>
@@ -130,6 +197,7 @@ export default {
       Id1: "",
       Id2: "",
       chatterName: "",
+      
     };
   },
 
@@ -300,6 +368,17 @@ export default {
 .konumara-btn{
     position:relative;
     left: +170px;
+}
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .inpt {
   border: 0;

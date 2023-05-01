@@ -71,10 +71,16 @@ Eğer bu projede yer almak ve daha fazla bilgi almak isterseniz, lütfen bizler 
       <h3 color="Red">Proje Ayağa Kaldırma Adımları:</h3>
       <ul>
         <li><strong>npm</strong> paket yöneticisine ihtiyacımız var. Node.js web sitesinden npm paket yöneticisini kurun.</li>
-        <li>Proje dosyalarınız olduğu klasör dizinine gidin ve orda komut terminali açın</li>
+        <li>Bulus-Tanis-BackEnd klasörü altında komut terminali açın başlatın</li>
         <li>npm install komutunu çalıştırın.</li>
-        <li>npm run serve komutunu çalıştırın</li>     
-        <li>Proje default olarak localhost:8080 adresinde çalışacaktır.</li>
+        <li>npm run serve komutunu çalıştırın</li>   
+	<li>BackEnd default olarak localhost:3000 adresinde çalışacaktır.</li>
+	<li>BackEnd - Veritabanı (MongoDb) bağlantısını yapmak için app.config.js dosyası içindeki connectionString'e kendi veritabanı bağlantı adresenizini giriniz.</li>
+	<li>Bulus-Tanis-FrontEnd klasörü altında komut terminali açın başlatın</li>
+        <li>npm install komutunu çalıştırın.</li>
+        <li>npm run serve komutunu çalıştırın</li>  
+        <li>FrontEnd default olarak localhost:8080 adresinde çalışacaktır.</li>
+	<li>BackEnd'e erişebilmek için config.backend.js doyası altındaki BASE_URL adresinin Back-End'in çalıştığı adres ile aynı olduğundan emin olun. Default olarak localhost:3000 adresinde çalışacaktır.</li>
       </ul>
   </li>
   <li>

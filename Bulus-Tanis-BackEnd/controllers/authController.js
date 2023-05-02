@@ -46,7 +46,11 @@ exports.loginUser = async (req, res) => {
                     "token": token,
                     "user": {
                         "userName": user.userName,
-                        "userMail": user.userMail
+                        "userMail": user.userMail,
+                        "userCountry": user.userCountry,
+                        "userCity": user.userCity,
+                        "userDistrict": user.userDistrict,
+                        "userNeighbourhood": user.userNeighbourhood                        
                     }
                 });
             } else {

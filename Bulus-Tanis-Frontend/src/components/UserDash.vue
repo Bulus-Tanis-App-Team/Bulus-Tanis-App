@@ -60,16 +60,16 @@
           <input type="text" id="name" name="name" v-model="userName"><br>
 
           <label for="country">Ülke:</label>
-          <input type="text" id="country" name="country" value="<?php echo $profile['country']; ?>"><br>
+          <input type="text" id="country" name="country" v-model="userCountry"><br>
 
           <label for="city">Şehir:</label>
-          <input type="text" id="city" name="city" value="<?php echo $profile['city']; ?>"><br>
+          <input type="text" id="city" name="city" v-model="userCity"><br>
 
           <label for="district">İlçe:</label>
-          <input type="text" id="district" name="district" value="<?php echo $profile['district']; ?>"><br>
+          <input type="text" id="district" name="district" v-model="userDistrict"><br>
 
           <label for="neighborhood">Mahalle:</label>
-          <input type="text" id="neighborhood" name="neighborhood" value="<?php echo $profile['neighborhood']; ?>"><br>
+          <input type="text" id="neighborhood" name="neighborhood" v-model="userNeighbourhood"><br>
 
           <button type="submit">Kaydet</button>
           <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalupdate">Değişiklik Yap</button>
@@ -194,6 +194,10 @@ export default {
       results2: [],
       userName: "",
       userMail:"",
+      userCountry: "",
+      userCity: "",
+      userDistrict:"",
+      userNeighbourhood:"",
       loggedMail: "",
       Text: "",
       Id1: "",
@@ -214,6 +218,10 @@ export default {
     getUserInfo(){
       this.userName = JSON.parse(localStorage.getItem('userName'));
       this.userMail = JSON.parse(localStorage.getItem('userMail'));
+      this.userCountry = JSON.parse(localStorage.getItem('userCountry'));
+      this.userCity = JSON.parse(localStorage.getItem('userCity'));
+      this.userDistrict = JSON.parse(localStorage.getItem('userDistrict'));
+      this.userNeighbourhood = JSON.parse(localStorage.getItem('userNeighbourhood'));
     },
     logout(){
       this.$router.replace('/');

@@ -61,6 +61,10 @@ export default {
           localStorage.setItem('token', JSON.stringify(userInfo.token));
           localStorage.setItem('userName', JSON.stringify(userInfo.user.userName));
           localStorage.setItem('userMail', JSON.stringify(userInfo.user.userMail));
+          localStorage.setItem('userCountry', JSON.stringify(userInfo.user.userCountry));
+          localStorage.setItem('userCity', JSON.stringify(userInfo.user.userCity));
+          localStorage.setItem('userDistrict', JSON.stringify(userInfo.user.userDistrict));
+          localStorage.setItem('userNeighbourhood', JSON.stringify(userInfo.user.userNeighbourhood));
           console.log(userInfo.mesaj);          
           this.$router.push('/user');
         } else {

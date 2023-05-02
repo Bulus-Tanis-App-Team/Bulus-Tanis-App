@@ -3,6 +3,8 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 
 const AuthRoute = require('./routes/authRoute');
+const MessageRoute = require('./routes/messageRoute');
+const FriendsRoute = require('./routes/friendsRoute');
 
 const mongoConfig = require('./app.config')
 const app = express();
@@ -16,6 +18,8 @@ app.use(express.json());
 
 app.get('/', (req, res) => { res.json({ message: "welcome" }) })
 app.use('/auth', AuthRoute);
+app.use('/message', MessageRoute);
+app.use('/friends', FriendsRoute);
 
 const port = 3000;
 app.listen(port, () => {

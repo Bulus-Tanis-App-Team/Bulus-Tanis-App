@@ -24,22 +24,36 @@
         <h5 class="modal-title" id="exampleModalLabel">Konum Ara</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" id="konumAraModalBody" >
         <form>
-          <label for="country">Ülke:</label>
-          <input type="text" id="country" name="country"><br>
+          <label for="searchingCountry">Ülke:</label>
+          <input type="text" id="searchingCity" v-model.trim="searchingCountry"><br>
 
-          <label for="city">Şehir:</label>
-          <input type="text" id="city" name="city"><br>
+          <label for="searchingCity">Şehir:</label>
+          <input type="text" id="searchingCity" v-model.trim="searchingCity"><br>
 
-          <label for="district">İlçe:</label>
-          <input type="text" id="district" name="district"><br>
+          <label for="searchingDistrict">İlçe:</label>
+          <input type="text" id="searchingDistrict" v-model.trim="searchingDistrict"><br>
 
-          <label for="neighborhood">Mahalle:</label>
-          <input type="text" id="neighborhood" name="neighborhood"><br>
+          <label for="searchingNeighbourhood">Mahalle:</label>
+          <input type="text" id="searchingNeighbourhood" v-model.trim="searchingNeighbourhood"><br>
 
-          <button type="submit">Ara</button>
+          <button type="submit" @click="getSearchingUsers">Ara</button>
         </form>
+      </div>
+      <div class="modal-body" id="searchedUserModalBody" style="display: none;">
+        <button class="btn btn-secondary" @click="backSearchingUsers">Geri</button>
+        <searched-user
+        v-for="user in searchingUsers"
+        :key="user.userMail"
+        :userName="user.userName"
+        :userMail="user.userMail"
+        :userCountry="user.userCountry"
+        :userCity="user.userCity"
+        :userDistrict="user.userDistrict"
+        :userNeighbourhood="user.userNeighbourhood"
+        >
+        </searched-user>
       </div>
       <div class="modal-footer"></div>
     </div>
@@ -182,11 +196,15 @@
 
 <script>
 import AllUser from "./AllUser.vue";
+import SearchedUser from "./SearchedUser.vue";
 import TheConversation from "./TheConversation.vue";
+import axios from 'axios';
+import { BASE_URL } from '../../config.backend'
 export default {
   components: {
     AllUser,
     TheConversation,
+    SearchedUser,
   },
   data() {
     return {
@@ -198,6 +216,12 @@ export default {
       userCity: "",
       userDistrict:"",
       userNeighbourhood:"",
+      searchingCountry: "",
+      searchingCity: "",
+      searchingDistrict: "",
+      searchingNeighbourhood: "",      
+      searchingUsers: [],
+      searchURL: "",
       loggedMail: "",
       Text: "",
       Id1: "",
@@ -214,7 +238,32 @@ export default {
     //this.GetLoggedUser();
     this.getUserInfo();
   },
-  methods: {    
+  methods: {
+    backSearchingUsers(){
+      document.getElementById("konumAraModalBody").style.display = "block";
+      document.getElementById("searchedUserModalBody").style.display = "none";
+    },  
+    async getSearchingUsers(){
+      this.searchURL = BASE_URL + "/search/get"
+      axios
+      .post(this.searchURL, {
+        "searchingCountry": this.searchingCountry,
+        "searchingCity": this.searchingCity,
+        "searchingDistrict": this.searchingDistrict,
+        "searchingNeighbourhood": this.searchingNeighbourhood,        
+      })
+      .then(res => {
+        this.searchingUsers = res.data; // bu veriyi diziyi atıp SearchedUser compenentinde bastırıyoruz.
+        // this.searchingUsers.forEach(element => {
+        //   console.log(element.userName);
+        // });  
+        document.getElementById("konumAraModalBody").style.display = "none";
+        document.getElementById("searchedUserModalBody").style.display = "block";
+      })
+      .catch(e => {
+          console.log(`register error ${e}`);
+      });
+    },
     getUserInfo(){
       this.userName = JSON.parse(localStorage.getItem('userName'));
       this.userMail = JSON.parse(localStorage.getItem('userMail'));
@@ -222,11 +271,17 @@ export default {
       this.userCity = JSON.parse(localStorage.getItem('userCity'));
       this.userDistrict = JSON.parse(localStorage.getItem('userDistrict'));
       this.userNeighbourhood = JSON.parse(localStorage.getItem('userNeighbourhood'));
+      //açıklama başla: genelde önce kendi konumumuzdaki kişileri arama eğilimindeyiz bu sebeple kendi konumumuz default olarak aranacak konuma atanır.
+      this.searchingCountry= this.userCountry;
+      this.searchingCity=this.userCity;
+      this.searchingDistrict=this.userDistrict;
+      this.searchingNeighbourhood=this.userNeighbourhood;
+      //açıklama bitiş:
     },
     logout(){
       this.$router.replace('/');
-      this.results2=[];
-      this.$store.reset();
+      // this.results2=[];
+      // this.$store.reset();
     },
     // sendMsg() {
     //   // alert()

@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const AuthRoute = require('./routes/authRoute');
 const MessageRoute = require('./routes/messageRoute');
 const FriendsRoute = require('./routes/friendsRoute');
+const SearchRoute = require('./routes/searchRoute');
 
 const mongoConfig = require('./app.config')
 const app = express();
@@ -20,6 +21,7 @@ app.get('/', (req, res) => { res.json({ message: "welcome" }) })
 app.use('/auth', AuthRoute);
 app.use('/message', MessageRoute);
 app.use('/friends', FriendsRoute);
+app.use('/search', SearchRoute);
 
 const port = 3000;
 app.listen(port, () => {

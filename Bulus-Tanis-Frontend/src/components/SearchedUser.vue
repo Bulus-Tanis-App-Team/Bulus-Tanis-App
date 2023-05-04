@@ -47,15 +47,7 @@
             <button class="btn btn-sm btn-outline-primary w-100" @click="createFriendShip">
               Arkadaş Ol Ve Sohbet Et
             </button>
-            <div
-              id="friendshipStatusAlert"
-              name="friendshipStatusAlert"
-              class="alert"
-              role="alert"              
-              v-show="this.friendshipStatus"
-            >
-              {{ this.mesaj }}
-            </div>
+            
           </div>
         </div>
       </div>
@@ -77,10 +69,10 @@ export default {
 
   data() {
     return {
-      friendshipStatus:false,
+      friendshipStatus: false,
+      friendshipMesaj:"",
       createFriendShipURL: "",
       friendMail: "",
-      mesaj: "",
     };
   },
   created() {
@@ -98,8 +90,9 @@ export default {
         })
         .then((res) => {
           let info = res.data;
-          this.mesaj = info.mesaj;
-
+          this.friendshipStatus=info.status;
+          this.friendshipMesaj=info.mesaj;
+          this.$emit('friendship-alert-emit', {status: this.friendshipStatus, message: this.friendshipMesaj});
           console.log(this.friendshipStatus);
           console.log(info.mesaj);
         })

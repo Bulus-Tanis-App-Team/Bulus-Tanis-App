@@ -13,6 +13,7 @@ exports.createFriends = async (req, res) => {
         //console.log(friendShipExist);
         if(friendShipExist){
             res.send({
+                "status": false,
                 "mesaj": `Arkadaşlık zaten var: ${req.body.userMail} - ${req.body.friendMail}`
             });
             return;

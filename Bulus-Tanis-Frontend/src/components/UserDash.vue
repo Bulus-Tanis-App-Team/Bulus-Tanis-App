@@ -5,133 +5,252 @@
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
     crossorigin="anonymous"
   />
-
-  <div class="row  g-0 z bg-danger">
+  <div
+    id="friendshipStatusAlert"
+    name="friendshipStatusAlert"
+    class="alert position-fixed"
+    role="alert"
+    style="display: none"
+  >
+    {{ this.friendshipMesaj }}
+  </div>
+  <div class="row g-0 z bg-danger">
     <div class="col-3 all-user shadow-lg p-3">
+      <div>
+        <button
+          type="button"
+          class="btn btn-primary konumara-btn"
+          data-bs-toggle="modal"
+          data-bs-target="#modalsearch"
+        >
+          Konum Ara
+        </button>
+      </div>
 
       <div>
-  <button type="button" class="btn btn-primary konumara-btn" data-bs-toggle="modal" data-bs-target="#modalsearch" >Konum Ara</button>
-</div>
-
-<div>
-  <button type="button" class="btn btn-primary profile-btn" data-bs-toggle="modal" data-bs-target="#modalprofile" >Profil</button>
-</div>
-
-<div class="modal fade" id="modalsearch" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Konum Ara</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body" id="konumAraModalBody" >
-        <form>
-          <label for="searchingCountry">Ülke:</label>
-          <input type="text" id="searchingCity" v-model.trim="searchingCountry"><br>
-
-          <label for="searchingCity">Şehir:</label>
-          <input type="text" id="searchingCity" v-model.trim="searchingCity"><br>
-
-          <label for="searchingDistrict">İlçe:</label>
-          <input type="text" id="searchingDistrict" v-model.trim="searchingDistrict"><br>
-
-          <label for="searchingNeighbourhood">Mahalle:</label>
-          <input type="text" id="searchingNeighbourhood" v-model.trim="searchingNeighbourhood"><br>
-
-          <button type="submit" @click="getSearchingUsers">Ara</button>
-        </form>
-      </div>
-      <div class="modal-body" id="searchedUserModalBody" style="display: none;">
-        <button class="btn btn-secondary" @click="backSearchingUsers">Geri</button>
-        <searched-user
-        v-for="user in searchingUsers"
-        :key="user.userMail"
-        :userName="user.userName"
-        :userMail="user.userMail"
-        :userCountry="user.userCountry"
-        :userCity="user.userCity"
-        :userDistrict="user.userDistrict"
-        :userNeighbourhood="user.userNeighbourhood"
+        <button
+          type="button"
+          class="btn btn-primary profile-btn"
+          data-bs-toggle="modal"
+          data-bs-target="#modalprofile"
         >
-        </searched-user>
+          Profil
+        </button>
       </div>
-      <div class="modal-footer"></div>
-    </div>
-  </div>
-</div>
 
-<!-- Profile modal -->
-<div class="modal fade" id="modalprofile" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Profil</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <label for="name">Profil İsmi:</label>
-          <input type="text" id="name" name="name" v-model="userName"><br>
+      <div
+        class="modal fade"
+        id="modalsearch"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Konum Ara</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body" id="konumAraModalBody">
+              <form>
+                <label for="searchingCountry">Ülke:</label>
+                <input
+                  type="text"
+                  id="searchingCity"
+                  v-model.trim="searchingCountry"
+                /><br />
 
-          <label for="country">Ülke:</label>
-          <input type="text" id="country" name="country" v-model="userCountry"><br>
+                <label for="searchingCity">Şehir:</label>
+                <input
+                  type="text"
+                  id="searchingCity"
+                  v-model.trim="searchingCity"
+                /><br />
 
-          <label for="city">Şehir:</label>
-          <input type="text" id="city" name="city" v-model="userCity"><br>
+                <label for="searchingDistrict">İlçe:</label>
+                <input
+                  type="text"
+                  id="searchingDistrict"
+                  v-model.trim="searchingDistrict"
+                /><br />
 
-          <label for="district">İlçe:</label>
-          <input type="text" id="district" name="district" v-model="userDistrict"><br>
+                <label for="searchingNeighbourhood">Mahalle:</label>
+                <input
+                  type="text"
+                  id="searchingNeighbourhood"
+                  v-model.trim="searchingNeighbourhood"
+                /><br />
 
-          <label for="neighborhood">Mahalle:</label>
-          <input type="text" id="neighborhood" name="neighborhood" v-model="userNeighbourhood"><br>
-
-          <button type="submit">Kaydet</button>
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalupdate">Değişiklik Yap</button>
-        </form>
-      </div>
-      <div class="modal-footer"></div>
-    </div>
-  </div>
-</div>
-
-
-<!-- Update modal -->
-<div class="modal fade" id="modalupdate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Profil Değişiklik Yap</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <label for="name">Profil İsmi:</label>
-          <input type="text" id="name" name="name"><br>
-
-          <label for="country">Ülke:</label>
-          <input type="text" id="country" name="country"><br>
-
-          <label for="city">Şehir:</label>
-          <input type="text" id="city" name="city"><br>
-
-          <label for="district">İlçe:</label>
-          <input type="text" id="district" name="district"><br>
-
-          <label for="neighborhood">Mahalle:</label>
-          <input type="text" id="neighborhood" name="neighborhood"><br>
-
-          <div class="mb-3">
-            <label for="image" class="form-label">Profil Resmi:</label>
-            <input class="form-control" type="file" id="image" name="image">
+                <button type="submit" @click="getSearchingUsers">Ara</button>
+              </form>
+            </div>
+            <div
+              class="modal-body"
+              id="searchedUserModalBody"
+              style="display: none"
+            >
+              <button class="btn btn-secondary" @click="backSearchingUsers">
+                Geri
+              </button>
+              <searched-user
+                v-for="user in searchingUsers"
+                :key="user.userMail"
+                :userName="user.userName"
+                :userMail="user.userMail"
+                :userCountry="user.userCountry"
+                :userCity="user.userCity"
+                :userDistrict="user.userDistrict"
+                :userNeighbourhood="user.userNeighbourhood"
+                @friendship-alert-emit="updateFriendshipStatusEmit"
+              >
+              </searched-user>
+            </div>
+            <div class="modal-footer"></div>
           </div>
-
-          <button type="submit">Kaydet</button>
-        </form>
+        </div>
       </div>
-      <div class="modal-footer"></div>
-    </div>
-  </div>
-</div>
+
+      <!-- Profile modal -->
+      <div
+        class="modal fade"
+        id="modalprofile"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Profil</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <label for="name">Profil İsmi:</label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  v-model="userName"
+                /><br />
+
+                <label for="country">Ülke:</label>
+                <input
+                  type="text"
+                  id="country"
+                  name="country"
+                  v-model="userCountry"
+                /><br />
+
+                <label for="city">Şehir:</label>
+                <input
+                  type="text"
+                  id="city"
+                  name="city"
+                  v-model="userCity"
+                /><br />
+
+                <label for="district">İlçe:</label>
+                <input
+                  type="text"
+                  id="district"
+                  name="district"
+                  v-model="userDistrict"
+                /><br />
+
+                <label for="neighborhood">Mahalle:</label>
+                <input
+                  type="text"
+                  id="neighborhood"
+                  name="neighborhood"
+                  v-model="userNeighbourhood"
+                /><br />
+
+                <button type="submit">Kaydet</button>
+                <button
+                  type="button"
+                  class="btn btn-primary"
+                  data-bs-toggle="modal"
+                  data-bs-target="#modalupdate"
+                >
+                  Değişiklik Yap
+                </button>
+              </form>
+            </div>
+            <div class="modal-footer"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Update modal -->
+      <div
+        class="modal fade"
+        id="modalupdate"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">
+                Profil Değişiklik Yap
+              </h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <label for="name">Profil İsmi:</label>
+                <input type="text" id="name" name="name" /><br />
+
+                <label for="country">Ülke:</label>
+                <input type="text" id="country" name="country" /><br />
+
+                <label for="city">Şehir:</label>
+                <input type="text" id="city" name="city" /><br />
+
+                <label for="district">İlçe:</label>
+                <input type="text" id="district" name="district" /><br />
+
+                <label for="neighborhood">Mahalle:</label>
+                <input
+                  type="text"
+                  id="neighborhood"
+                  name="neighborhood"
+                /><br />
+
+                <div class="mb-3">
+                  <label for="image" class="form-label">Profil Resmi:</label>
+                  <input
+                    class="form-control"
+                    type="file"
+                    id="image"
+                    name="image"
+                  />
+                </div>
+
+                <button type="submit">Kaydet</button>
+              </form>
+            </div>
+            <div class="modal-footer"></div>
+          </div>
+        </div>
+      </div>
 
       <div class="text-center mb-2 p-0"><h3>Chat List</h3></div>
       <all-user
@@ -147,30 +266,33 @@
     </div>
 
     <div class="col-9 convo">
-      <div class="col-12 mt-1  all-msg">
+      <div class="col-12 mt-1 all-msg">
         <div class="m-3">
-          <img  v-if="chatterName"         
-          src="https://media.istockphoto.com/vectors/user-member-vector-icon-for-ui-user-interface-or-profile-face-avatar-vector-id1130884625?k=20&m=1130884625&s=612x612&w=0&h=OITK5Otm_lRj7Cx8mBhm7NtLTEHvp6v3XnZFLZmuB9o="
-          alt=""
-        />
-        <span
-          v-if="chatterName"
-          class="shadow-lg bg-white rounded-pill mt-1 me-1 ps-3 pe-3"
-          ><b>{{ chatterName }}</b></span
-        >
-        <button @click="logout" type="button" class="btn btn-danger">Logout</button>
+          <img
+            v-if="chatterName"
+            src="https://media.istockphoto.com/vectors/user-member-vector-icon-for-ui-user-interface-or-profile-face-avatar-vector-id1130884625?k=20&m=1130884625&s=612x612&w=0&h=OITK5Otm_lRj7Cx8mBhm7NtLTEHvp6v3XnZFLZmuB9o="
+            alt=""
+          />
+          <span
+            v-if="chatterName"
+            class="shadow-lg bg-white rounded-pill mt-1 me-1 ps-3 pe-3"
+            ><b>{{ chatterName }}</b></span
+          >
+          <button @click="logout" type="button" class="btn btn-danger">
+            Logout
+          </button>
         </div>
 
-       <div  v-if="chatterName">
-        <the-conversation 
-          v-for="x in results2"
-          :key="x.Id"
-          :Id="x.Id"
-          :Text="x.Text"
-          :UserId="x.UserId"
-          :UserId2="x.UserId2"
-        ></the-conversation>
-       </div>
+        <div v-if="chatterName">
+          <the-conversation
+            v-for="x in results2"
+            :key="x.Id"
+            :Id="x.Id"
+            :Text="x.Text"
+            :UserId="x.UserId"
+            :UserId2="x.UserId2"
+          ></the-conversation>
+        </div>
       </div>
 
       <form @submit.prevent="sendMsg" class="w-75" action="">
@@ -178,7 +300,7 @@
           <div>
             <input
               type="text"
-              class="form-control  inpt"
+              class="form-control inpt"
               placeholder="Enter Your Message"
               aria-label="Enter Your Message"
               aria-describedby="basic-addon2"
@@ -198,8 +320,8 @@
 import AllUser from "./AllUser.vue";
 import SearchedUser from "./SearchedUser.vue";
 import TheConversation from "./TheConversation.vue";
-import axios from 'axios';
-import { BASE_URL } from '../../config.backend'
+import axios from "axios";
+import { BASE_URL } from "../../config.backend";
 export default {
   components: {
     AllUser,
@@ -211,27 +333,28 @@ export default {
       results: [],
       results2: [],
       userName: "",
-      userMail:"",
+      userMail: "",
       userCountry: "",
       userCity: "",
-      userDistrict:"",
-      userNeighbourhood:"",
+      userDistrict: "",
+      userNeighbourhood: "",
       searchingCountry: "",
       searchingCity: "",
       searchingDistrict: "",
-      searchingNeighbourhood: "",      
+      searchingNeighbourhood: "",
       searchingUsers: [],
       searchURL: "",
+      friendshipMesaj: "",
+      friendshipStatus: false,
       loggedMail: "",
       Text: "",
       Id1: "",
       Id2: "",
-      chatterName: "",      
+      chatterName: "",
     };
   },
 
-  computed: {
-  },
+  computed: {},
 
   created() {
     //this.loggedMail = this.$store.getters["user/loggedEmail"];
@@ -239,47 +362,78 @@ export default {
     this.getUserInfo();
   },
   methods: {
-    backSearchingUsers(){
+    updateFriendshipStatusEmit({ status, message }) {
+      this.friendshipStatus = status;
+      this.friendshipMesaj = message;
+      // console.log(
+      //   "updateFriendshipStatusEmit: " +
+      //     this.friendshipStatus +
+      //     " " +
+      //     this.friendshipMesaj
+      // );
+      var friendshipStatusAlert = document.getElementById(
+        "friendshipStatusAlert"
+      );
+
+      if (this.friendshipStatus == true) {
+        friendshipStatusAlert.classList.add("alert-success");
+      } else {
+        friendshipStatusAlert.classList.add("alert-danger");
+      }
+
+      friendshipStatusAlert.style.display = "block";
+
+      // Belirli bir süre (20 saniye) sonra alert komponentini gizle
+      setTimeout(function () {
+        friendshipStatusAlert.classList.remove("alert-success");
+        friendshipStatusAlert.classList.remove("alert-danger");
+        friendshipStatusAlert.style.display = "none";
+      }, 5000);
+    },
+    backSearchingUsers() {
       document.getElementById("konumAraModalBody").style.display = "block";
       document.getElementById("searchedUserModalBody").style.display = "none";
-    },  
-    async getSearchingUsers(){
-      this.searchURL = BASE_URL + "/search/get"
-      axios
-      .post(this.searchURL, {
-        "searchingCountry": this.searchingCountry,
-        "searchingCity": this.searchingCity,
-        "searchingDistrict": this.searchingDistrict,
-        "searchingNeighbourhood": this.searchingNeighbourhood,        
-      })
-      .then(res => {
-        this.searchingUsers = res.data; // bu veriyi diziyi atıp SearchedUser compenentinde bastırıyoruz.
-        // this.searchingUsers.forEach(element => {
-        //   console.log(element.userName);
-        // });  
-        document.getElementById("konumAraModalBody").style.display = "none";
-        document.getElementById("searchedUserModalBody").style.display = "block";
-      })
-      .catch(e => {
-          console.log(`register error ${e}`);
-      });
     },
-    getUserInfo(){
-      this.userName = JSON.parse(localStorage.getItem('userName'));
-      this.userMail = JSON.parse(localStorage.getItem('userMail'));
-      this.userCountry = JSON.parse(localStorage.getItem('userCountry'));
-      this.userCity = JSON.parse(localStorage.getItem('userCity'));
-      this.userDistrict = JSON.parse(localStorage.getItem('userDistrict'));
-      this.userNeighbourhood = JSON.parse(localStorage.getItem('userNeighbourhood'));
+    async getSearchingUsers() {
+      this.searchURL = BASE_URL + "/search/get";
+      axios
+        .post(this.searchURL, {
+          searchingCountry: this.searchingCountry,
+          searchingCity: this.searchingCity,
+          searchingDistrict: this.searchingDistrict,
+          searchingNeighbourhood: this.searchingNeighbourhood,
+        })
+        .then((res) => {
+          this.searchingUsers = res.data; // bu veriyi diziyi atıp SearchedUser compenentinde bastırıyoruz.
+          // this.searchingUsers.forEach(element => {
+          //   console.log(element.userName);
+          // });
+          document.getElementById("konumAraModalBody").style.display = "none";
+          document.getElementById("searchedUserModalBody").style.display =
+            "block";
+        })
+        .catch((e) => {
+          console.log(`register error ${e}`);
+        });
+    },
+    getUserInfo() {
+      this.userName = JSON.parse(localStorage.getItem("userName"));
+      this.userMail = JSON.parse(localStorage.getItem("userMail"));
+      this.userCountry = JSON.parse(localStorage.getItem("userCountry"));
+      this.userCity = JSON.parse(localStorage.getItem("userCity"));
+      this.userDistrict = JSON.parse(localStorage.getItem("userDistrict"));
+      this.userNeighbourhood = JSON.parse(
+        localStorage.getItem("userNeighbourhood")
+      );
       //açıklama başla: genelde önce kendi konumumuzdaki kişileri arama eğilimindeyiz bu sebeple kendi konumumuz default olarak aranacak konuma atanır.
-      this.searchingCountry= this.userCountry;
-      this.searchingCity=this.userCity;
-      this.searchingDistrict=this.userDistrict;
-      this.searchingNeighbourhood=this.userNeighbourhood;
+      this.searchingCountry = this.userCountry;
+      this.searchingCity = this.userCity;
+      this.searchingDistrict = this.userDistrict;
+      this.searchingNeighbourhood = this.userNeighbourhood;
       //açıklama bitiş:
     },
-    logout(){
-      this.$router.replace('/');
+    logout() {
+      this.$router.replace("/");
       // this.results2=[];
       // this.$store.reset();
     },
@@ -434,9 +588,9 @@ export default {
   margin-top: 10px;
   float: right;
 }
-.konumara-btn{
-    position:relative;
-    left: +170px;
+.konumara-btn {
+  position: relative;
+  left: +170px;
 }
 .modal-overlay {
   position: fixed;
@@ -455,18 +609,18 @@ export default {
 
   margin-left: 20px;
   margin-right: 10px;
-  margin-top:60px;
-  width:98%;
+  margin-top: 60px;
+  width: 98%;
 }
 .inpt::placeholder {
   font-family: Arial, Helvetica, sans-serif;
 }
 .all-user {
   background: rgba(255, 255, 255, 0.562);
-  overflow-y:scroll;
+  overflow-y: scroll;
   height: 100%;
 }
-.send-msg{
+.send-msg {
   overflow: hidden;
 }
 img {
@@ -500,7 +654,10 @@ label {
   margin-bottom: 10px;
 }
 
-input[type=text], input[type=email], input[type=tel],input[type=message] {
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="message"] {
   width: 100%;
   padding: 6px;
   border: 1px solid #ccc;
@@ -509,8 +666,8 @@ input[type=text], input[type=email], input[type=tel],input[type=message] {
   margin-bottom: 10px;
 }
 
-button[type=submit] {
-  background-color: #4CAF50;
+button[type="submit"] {
+  background-color: #4caf50;
   color: white;
   padding: 10px 20px;
   border: none;
@@ -519,10 +676,13 @@ button[type=submit] {
   margin-bottom: 10px;
 }
 
-button[type=submit]:hover {
+button[type="submit"]:hover {
   background-color: #45a049;
-
 }
-
-
+.position-fixed{
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 9999;
+}
 </style>

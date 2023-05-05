@@ -1,3 +1,4 @@
+const Friends = require("../models/Friends");
 const Message = require("../models/Message");
 const User = require("../models/User");
 
@@ -21,6 +22,18 @@ exports.createMessage = async (req, res) => {
             return;
         }
         //kontrol-0 release sürümde sil -end
+        //kontrol-1 iki kullanıcı arkadaş mı - start
+        const userMail=req.body.userMailSendMessage;
+        const friendMail=req.body.userMailGetMessage;
+        const isFriend = await Friends.findOne({ userMail: userMail ,friendMail: friendMail });
+        console.log(isFriend);
+        if(!isFriend){
+            res.send({
+                "mesaj": `Kullanıcılar arkadaş değil! Mesaj Gönderilemez!`
+            });
+            return;
+        }
+        //kontrol-1 iki kullanıcı arkadaş mı - end
         const message = await Message.create(req.body);
         res.status(201).json({
             "status": true,

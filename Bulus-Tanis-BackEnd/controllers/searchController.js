@@ -3,13 +3,13 @@ const User = require("../models/User");
 exports.searchUser = async (req, res) => {
     try {
         console.log(req.body);
-        if(req.body.searchingCountry && req.body.searchingCity && req.body.searchingDistrict && req.body.searchingNeighborhood){
+        if(req.body.searchingCountry && req.body.searchingCity && req.body.searchingDistrict && req.body.searchingNeighbourhood){
             const users = await User.find({$and:[
                 {userCountry:req.body.searchingCountry},
                 {userCity:req.body.searchingCity},
                 {userDistrict:req.body.searchingDistrict},
-                {userNeighborhood:req.body.searchingNeighborhood}]});
-            res.status(201).json([]);
+                {userNeighbourhood:req.body.searchingNeighbourhood}]});
+            res.status(201).json(users);
             return;
         }else if(req.body.searchingCountry && req.body.searchingCity && req.body.searchingDistrict){            
             const users = await User.find({$and:[

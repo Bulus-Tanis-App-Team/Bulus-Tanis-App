@@ -37,6 +37,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+import { BASE_URL } from '../../config.backend'
 export default {
     data(){
         return{
@@ -48,45 +50,35 @@ export default {
           City:"",
           District:"",
           Neighbourhood:"",
+          registerURL:"",
           successful:false,
           clicked:false,
         }
     },
     methods:{
-      register(){ 
-            this.clicked=true;
-            fetch(
-                "https://localhost:44313/api/create/user",
-                {
-                    method: "POST",
-                    headers: {
-                    "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({
-                    FirstName: this.FirstName,
-                    LastName: this.LastName,
-                    Email: this.Email,
-                    
-                    }),
-                
-                }
-                )
-                .then((response) => {
-                    if (!response.ok) {
-                    throw new Error("Could not save the data");
-                    }else{
-                        this.FirstName="";
-                        this.LastName="";
-                        this.Email="";
-                        this.successful=true;
-                    }
-                })
-                .catch((error) => {
-                    this.error = error;
-                    console.log(error);
-                }
-            );
-                
+      async register(){ 
+        this.registerURL = BASE_URL + "/auth/signup"
+      axios
+      .post(this.registerURL, {
+        "userName": this.FirstName+" "+this.LastName,
+        "userMail": this.Email,
+        "userPassword": this.Password,
+        "userCountry": this.Country,
+        "userCity": this.City,
+        "userDistrict": this.District,
+        "userNeighbourhood": this.Neighbourhood,
+      })
+      .then(res => {
+        let registerInfo = res.data;
+        console.log(registerInfo.mesaj);   
+        if(registerInfo.user){
+          this.successful = true;
+        }     
+      })
+      .catch(e => {
+          console.log(`register error ${e}`);
+      });
+                            
         }
     }
 }

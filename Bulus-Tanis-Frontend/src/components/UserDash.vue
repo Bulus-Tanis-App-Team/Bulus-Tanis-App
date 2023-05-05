@@ -57,7 +57,7 @@
       <div class="modal-body">
         <form>
           <label for="name">Profil İsmi:</label>
-          <input type="text" id="name" name="name" value="<?php echo $profile['name']; ?>"><br>
+          <input type="text" id="name" name="name" v-model="userName"><br>
 
           <label for="country">Ülke:</label>
           <input type="text" id="country" name="country" value="<?php echo $profile['country']; ?>"><br>
@@ -192,12 +192,13 @@ export default {
     return {
       results: [],
       results2: [],
+      userName: "",
+      userMail:"",
       loggedMail: "",
       Text: "",
       Id1: "",
       Id2: "",
-      chatterName: "",
-      
+      chatterName: "",      
     };
   },
 
@@ -205,154 +206,159 @@ export default {
   },
 
   created() {
-    this.loggedMail = this.$store.getters["user/loggedEmail"];
-    this.GetLoggedUser();
+    //this.loggedMail = this.$store.getters["user/loggedEmail"];
+    //this.GetLoggedUser();
+    this.getUserInfo();
   },
-  methods: {
+  methods: {    
+    getUserInfo(){
+      this.userName = JSON.parse(localStorage.getItem('userName'));
+      this.userMail = JSON.parse(localStorage.getItem('userMail'));
+    },
     logout(){
       this.$router.replace('/');
       this.results2=[];
       this.$store.reset();
     },
-    sendMsg() {
-      // alert()
-      this.Id1 = this.$store.getters["user/loggedUserId"];
-      this.Id2 = this.$store.getters["user/getId2"];
-      //console.log("vvv"+ this.chatterName)
-      fetch("https://localhost:44313/api/create/messsage/user", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          Text: this.Text,
-          UserId: this.Id1,
-          UserId2: this.Id2,
-        }),
-      })
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Could not save the data");
-          } else {
-            this.Text = "";
-            this.UserId = "";
-            this.UserId2 = "";
-          }
-        })
-        .catch((error) => {
-          this.error = error;
-          console.log(error);
-        });
-    },
-    async loadUsers() {
-      await fetch("https://localhost:44313/api/all/user", {
-        method: "GET",
-      })
-        .then((response) => {
-          if (response.ok) {
-            return response.json();
-            //console.log(response)
-          }
-        })
-        .then((data) => {
-          //   console.log(data)
-          const results = [];
-          for (const id in data) {
-            results.push({
-              Id: data[id].Id,
-              FirstName: data[id].FirstName,
-              LastName: data[id].LastName,
-              Email: data[id].Email,
-            });
-          }
-          //console.log(results)
-          const UserIndex = results.findIndex(
-            (x) => x.Id === this.$store.getters["user/loggedUserId"]
-          );
+    // sendMsg() {
+    //   // alert()
+    //   this.Id1 = this.$store.getters["user/loggedUserId"];
+    //   this.Id2 = this.$store.getters["user/getId2"];
+    //   //console.log("vvv"+ this.chatterName)
+    //   fetch("https://localhost:44313/api/create/messsage/user", {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify({
+    //       Text: this.Text,
+    //       UserId: this.Id1,
+    //       UserId2: this.Id2,
+    //     }),
+    //   })
+    //     .then((response) => {
+    //       if (!response.ok) {
+    //         throw new Error("Could not save the data");
+    //       } else {
+    //         this.Text = "";
+    //         this.UserId = "";
+    //         this.UserId2 = "";
+    //       }
+    //     })
+    //     .catch((error) => {
+    //       this.error = error;
+    //       console.log(error);
+    //     });
+    // },
+    // async loadUsers() {
+    //   await fetch("https://localhost:44313/api/all/user", {
+    //     method: "GET",
+    //   })
+    //     .then((response) => {
+    //       if (response.ok) {
+    //         return response.json();
+    //         //console.log(response)
+    //       }
+    //     })
+    //     .then((data) => {
+    //       //   console.log(data)
+    //       const results = [];
+    //       for (const id in data) {
+    //         results.push({
+    //           Id: data[id].Id,
+    //           FirstName: data[id].FirstName,
+    //           LastName: data[id].LastName,
+    //           Email: data[id].Email,
+    //         });
+    //       }
+    //       //console.log(results)
+    //       const UserIndex = results.findIndex(
+    //         (x) => x.Id === this.$store.getters["user/loggedUserId"]
+    //       );
 
-          results.splice(UserIndex, 1);
-          this.results = results;
-          console.log(UserIndex);
-        })
-        .catch((error) => {
-          this.isLoading = false;
-          this.error = error;
-        });
-    },
-    async GetLoggedUser() {
-      await fetch(
-        `https://localhost:44313/api/login/user/${this.loggedMail}/`,
-        {
-          method: "GET",
-        }
-      )
-        .then((response) => {
-          if (response.ok) {
-            return response.json();
-            //console.log(response)
-          }
-        })
-        .then((data) => {
-          console.log(data.Id);
-          this.$store.dispatch("user/addUserDetail", {
-            Id: data.Id,
-            FirstName: data.FirstName,
-            LastName: data.LastName,
-          });
-        })
-        .catch((error) => {
-          this.isLoading = false;
-          this.error = error;
-        });
-    },
+    //       results.splice(UserIndex, 1);
+    //       this.results = results;
+    //       console.log(UserIndex);
+    //     })
+    //     .catch((error) => {
+    //       this.isLoading = false;
+    //       this.error = error;
+    //     });
+    // },
+    // async GetLoggedUser() {
+    //   await fetch(
+    //     `https://localhost:44313/api/login/user/${this.loggedMail}/`,
+    //     {
+    //       method: "GET",
+    //     }
+    //   )
+    //     .then((response) => {
+    //       if (response.ok) {
+    //         return response.json();
+    //         //console.log(response)
+    //       }
+    //     })
+    //     .then((data) => {
+    //       console.log(data.Id);
+    //       this.$store.dispatch("user/addUserDetail", {
+    //         Id: data.Id,
+    //         FirstName: data.FirstName,
+    //         LastName: data.LastName,
+    //       });
+    //     })
+    //     .catch((error) => {
+    //       this.isLoading = false;
+    //       this.error = error;
+    //     });
+    // },
 
-    convo(value) {
-      // alert();
-      // console.log(value);
-      this.chatterName = value;
-      // console.log(this.Id2)
-      //console.log(this.results2);
-    },
+    // convo(value) {
+    //   // alert();
+    //   // console.log(value);
+    //   this.chatterName = value;
+    //   // console.log(this.Id2)
+    //   //console.log(this.results2);
+    // },
 
-    allMessages() {
-      this.Id1 = this.$store.getters["user/loggedUserId"];
-      this.Id2 = this.$store.getters["user/getId2"];
-      fetch(
-        `https://localhost:44313/api/all/coversation/${this.Id1}/${this.Id2}`,
-        {
-          method: "GET",
-        }
-      )
-        .then((response) => {
-          if (response.ok) {
-            return response.json();
-            //console.log(response)
-          }
-        })
-        .then((data) => {
-          //   console.log(data)
-          const results = [];
-          for (const id in data) {
-            results.push({
-              Id: data[id].Id,
-              Text: data[id].Text,
-              UserId: data[id].UserId,
-              UserId2: data[id].UserId2,
-            });
-          }
-          this.results2 = results;
-          //   console.log(this.results)
-        })
-        .catch((error) => {
-          console.log(error);
-          // alert(error)
-        });
-    },
+    // allMessages() {
+    //   this.Id1 = this.$store.getters["user/loggedUserId"];
+    //   this.Id2 = this.$store.getters["user/getId2"];
+    //   fetch(
+    //     `https://localhost:44313/api/all/coversation/${this.Id1}/${this.Id2}`,
+    //     {
+    //       method: "GET",
+    //     }
+    //   )
+    //     .then((response) => {
+    //       if (response.ok) {
+    //         return response.json();
+    //         //console.log(response)
+    //       }
+    //     })
+    //     .then((data) => {
+    //       //   console.log(data)
+    //       const results = [];
+    //       for (const id in data) {
+    //         results.push({
+    //           Id: data[id].Id,
+    //           Text: data[id].Text,
+    //           UserId: data[id].UserId,
+    //           UserId2: data[id].UserId2,
+    //         });
+    //       }
+    //       this.results2 = results;
+    //       //   console.log(this.results)
+    //     })
+    //     .catch((error) => {
+    //       console.log(error);
+    //       // alert(error)
+    //     });
+    // },
   },
-  mounted() {
-    this.loadUsers();
-    setInterval(this.allMessages, 2000);
-  },
+  // mounted() {
+  //   this.loadUsers();
+  //   setInterval(this.allMessages, 2000);
+  // },
 };
 </script>
 

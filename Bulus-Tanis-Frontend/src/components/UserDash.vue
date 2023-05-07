@@ -107,6 +107,7 @@
                 :userDistrict="user.userDistrict"
                 :userNeighbourhood="user.userNeighbourhood"
                 @friendship-alert-emit="updateFriendshipStatusEmit"
+                @add-all-friends-list-emit="handleAddAllFriendsListEmit"
               >
               </searched-user>
             </div>
@@ -252,43 +253,62 @@
         </div>
       </div>
 
-      <div class="text-center mb-2 p-0"><h3>Chat List</h3></div>
-      <all-user
-        v-for="result in results"
-        :key="result.Id"
-        :Id="result.Id"
-        :FirstName="result.FirstName"
-        :LastName="result.LastName"
-        :Email="result.Email"
-        @convo="convo"
+      <div class="text-center mb-2 p-0"><h3>Arkadaş Listesi</h3></div>
+      <all-friends
+        v-for="friend in allFriends"
+        :key="friend.userMail"
+        :friendName="friend.userName"
+        :friendEmail="friend.userMail"
+        @set-messaging-panel="handleSetMessagingPanel"
       >
-      </all-user>
+      </all-friends>
     </div>
 
     <div class="col-9 convo">
       <div class="col-12 mt-1 all-msg">
         <div class="m-3">
           <img
-            v-if="chatterName"
+            v-if="userNameGetMessage"
             src="https://media.istockphoto.com/vectors/user-member-vector-icon-for-ui-user-interface-or-profile-face-avatar-vector-id1130884625?k=20&m=1130884625&s=612x612&w=0&h=OITK5Otm_lRj7Cx8mBhm7NtLTEHvp6v3XnZFLZmuB9o="
             alt=""
           />
           <span
-            v-if="chatterName"
+            v-if="userNameGetMessage"
             class="shadow-lg bg-white rounded-pill mt-1 me-1 ps-3 pe-3"
-            ><b>{{ chatterName }}</b></span
+            ><b>{{ userNameGetMessage }}</b></span
           >
           <button @click="logout" type="button" class="btn btn-danger">
             Logout
           </button>
         </div>
+        <!-- <div class="container">
+          <form @submit.prevent="testSocket" class="w-75" action="">
+            <div class="send-msg">
+              <div>
+                <input
+                  type="text"
+                  class="form-control inpt"
+                  placeholder="Enter Your TestSocket"
+                  aria-label="Enter Your TestSocket"
+                  aria-describedby="basic-addon2"
+                  v-model="textSocket"
+                />
+              </div>
+              <div>
+                <button type="submit" class="btn btn-primary send-btn">
+                  Send Socket
+                </button>
+              </div>
+            </div>
+          </form>
+        </div> -->
 
         <div v-if="chatterName">
           <the-conversation
             v-for="x in results2"
             :key="x.Id"
             :Id="x.Id"
-            :Text="x.Text"
+            :text="x.text"
             :UserId="x.UserId"
             :UserId2="x.UserId2"
           ></the-conversation>
@@ -304,11 +324,11 @@
               placeholder="Enter Your Message"
               aria-label="Enter Your Message"
               aria-describedby="basic-addon2"
-              v-model="Text"
+              v-model="text"
             />
           </div>
           <div>
-            <button type="submit" class="btn btn-primary send-btn">Send</button>
+            <button type="submit" class="btn btn-primary send-btn" @click="sendMessage" v-if="userMailGetMessage">Gönder</button>
           </div>
         </div>
       </form>
@@ -317,14 +337,15 @@
 </template>
 
 <script>
-import AllUser from "./AllUser.vue";
+import AllFriends from "./AllFriends.vue";
 import SearchedUser from "./SearchedUser.vue";
 import TheConversation from "./TheConversation.vue";
 import axios from "axios";
 import { BASE_URL } from "../../config.backend";
+import { io } from "socket.io-client";
 export default {
   components: {
-    AllUser,
+    AllFriends,
     TheConversation,
     SearchedUser,
   },
@@ -346,8 +367,13 @@ export default {
       searchURL: "",
       friendshipMesaj: "",
       friendshipStatus: false,
+      allFriends: [],
+      userNameGetMessage: "",
+      userMailGetMessage: "",
+      allMessagesWithFriend: [],
+      textSocket: "",
       loggedMail: "",
-      Text: "",
+      text: "",
       Id1: "",
       Id2: "",
       chatterName: "",
@@ -360,8 +386,77 @@ export default {
     //this.loggedMail = this.$store.getters["user/loggedEmail"];
     //this.GetLoggedUser();
     this.getUserInfo();
+    this.socket = io(BASE_URL,{
+      query: {
+        userMail: this.userMail,
+      },
+    });
+    this.socket.on('getMessage', (message) => {
+      console.log('Mesaj alındı:', message);
+    });
+    
   },
-  methods: {
+  methods: {  
+    async sendMessage(){
+      let getMessagesURL = BASE_URL+"/message/send";
+      await axios
+        .post(getMessagesURL, {
+          userMailSendMessage: this.userMail,
+          userMailGetMessage: this.userMailGetMessage,
+          message: this.text
+        })
+        .then((res) => {
+          console.log(res.data);
+        })
+        .catch((e) => {
+          console.log(`sendMessage err: ${e}`);
+        });
+    },
+    handleAddAllFriendsListEmit(data){
+      this.allFriends.push(data);
+    },
+    async handleSetMessagingPanel({userNameGetMessage,userMailGetMessage}) {
+      this.userNameGetMessage = userNameGetMessage;
+      this.userMailGetMessage = userMailGetMessage;
+      let getMessagesURL = BASE_URL+"/message/get";
+      await axios
+        .post(getMessagesURL, {
+          userMailSendMessage: this.userMail,
+          userMailGetMessage: this.userMailGetMessage
+        })
+        .then((res) => {
+          this.getMessagesWithFriend = res.data;
+          console.log(res.data);
+        })
+        .catch((e) => {
+          console.log(`handleSetMessagingPanel : getMessagesWithFriend err: ${e}`);
+        });
+      //console.log("şuan mesajlaşılan kişi: Name: " + userNameGetMessage+" | Email: "+userMailGetMessage);
+    },
+    async getAllFriends() {
+      let getAllFriendsURL = BASE_URL+"/friends/get";
+      await axios
+        .post(getAllFriendsURL, {
+          userMail: this.userMail,
+        })
+        .then((res) => {
+          this.allFriends = res.data;
+          //console.log(this.allFriends);
+        })
+        .catch((e) => {
+          console.log(`getAllFriends err: ${e}`);
+        });
+    },
+    async testSocket() {
+      // mesajın yollanması için back-end den mesaj başarıyla geçmeli. bu nedenle nack-end e send edilen kısmın response true
+      //kısmına bu kod eklenicek
+      console.log("testSocket msj: "+this.textSocket);
+      await this.socket.emit('sendMessage', {
+        userMailGetMessage: "test0@gmail.com",
+        message: this.textSocket,
+      });
+      this.textSocket = '';
+    },
     updateFriendshipStatusEmit({ status, message }) {
       this.friendshipStatus = status;
       this.friendshipMesaj = message;
@@ -396,7 +491,7 @@ export default {
     },
     async getSearchingUsers() {
       this.searchURL = BASE_URL + "/search/get";
-      axios
+      await axios
         .post(this.searchURL, {
           searchingCountry: this.searchingCountry,
           searchingCity: this.searchingCity,
@@ -413,7 +508,7 @@ export default {
             "block";
         })
         .catch((e) => {
-          console.log(`register error ${e}`);
+          console.log(`getSearchingUsers err: ${e}`);
         });
     },
     getUserInfo() {
@@ -572,10 +667,11 @@ export default {
     //     });
     // },
   },
-  // mounted() {
-  //   this.loadUsers();
-  //   setInterval(this.allMessages, 2000);
-  // },
+  mounted() {
+    this.getAllFriends();
+    //this.loadUsers();
+    //setInterval(this.allMessages, 2000);
+  },
 };
 </script>
 
@@ -679,7 +775,7 @@ button[type="submit"] {
 button[type="submit"]:hover {
   background-color: #45a049;
 }
-.position-fixed{
+.position-fixed {
   position: fixed;
   top: 0;
   right: 0;

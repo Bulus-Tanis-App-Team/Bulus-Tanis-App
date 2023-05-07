@@ -45,7 +45,7 @@ export default {
       loginURL: "",
     }
   },
-  methods: {
+  methods: {    
     async login() {
       this.loginURL = BASE_URL + "/auth/login"
       axios
@@ -65,7 +65,7 @@ export default {
           localStorage.setItem('userCity', JSON.stringify(userInfo.user.userCity));
           localStorage.setItem('userDistrict', JSON.stringify(userInfo.user.userDistrict));
           localStorage.setItem('userNeighbourhood', JSON.stringify(userInfo.user.userNeighbourhood));
-          console.log(userInfo.mesaj);          
+          console.log(userInfo.mesaj);  
           this.$router.push('/user');
         } else {
           console.log(userInfo.mesaj);

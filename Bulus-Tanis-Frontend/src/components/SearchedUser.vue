@@ -80,19 +80,23 @@ export default {
     // console.log(this.userID)
   },
   methods: {
-    createFriendShip() {
+    async createFriendShip() {
       this.createFriendShipURL = BASE_URL + "/friends/create";
       this.friendMail = JSON.parse(localStorage.getItem("userMail"));
-      axios
+      await axios
         .post(this.createFriendShipURL, {
           userMail: this.userMail,
           friendMail: this.friendMail,
         })
         .then((res) => {
-          let info = res.data;
+          let info = res.data;          
           this.friendshipStatus=info.status;
           this.friendshipMesaj=info.mesaj;
           this.$emit('friendship-alert-emit', {status: this.friendshipStatus, message: this.friendshipMesaj});
+          console.log(res.data.friendInfo);
+          if(info.status){
+            this.$emit('add-all-friends-list-emit', res.data.friendInfo);
+          }          
           console.log(this.friendshipStatus);
           console.log(info.mesaj);
         })

@@ -10,7 +10,8 @@ const FriendsSchema = new Schema({
     friendMail: {
         type: String,
         required: true,
-        trim: true
+        trim: true,
+        ref: 'User'
     }
 });
 

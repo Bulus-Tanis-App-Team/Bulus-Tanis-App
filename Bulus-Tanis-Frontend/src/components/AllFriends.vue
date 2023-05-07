@@ -5,10 +5,10 @@
         </div>
         <div class="col-6 ">
            <div class="name m-0">
-            <p>{{FirstName}} {{LastName}}</p>
+            <p>{{friendName}}</p>
            </div>
-           <div class="mb-2  ">
-            <button v-on:click="conversation">Chat Now</button>
+           <div class="mb-2">
+            <button @click="setMessagingPanel">Mesajlaş</button>
            </div>
         </div>
     </div> 
@@ -16,36 +16,23 @@
 
 <script>
 export default {
-  props: ['Id','FirstName', 'LastName','Email'],
+  props: ['friendName','friendEmail'],
 
   data() {
     return {
-       results: [],
-       userID:null,
     };
   },
-
-  emits: ["convo"],
-
+  emits:['set-messaging-panel'],
   created() {
-    this.userID = this.$store.getters["user/loggedUserId"];
-    // console.log(this.userID)
+
   },
   methods:{
-    async conversation() {
-        // alert()
-        this.$store.dispatch("user/addId2", {
-            Id2: this.Id,
-            
-        });
-
-        this.$store.dispatch("user/addChatterName", {
-          x: this.FirstName  ,
-            
-        });
-      
-        this.$emit('convo', this.FirstName);
-    },    
+    setMessagingPanel(){
+      this.$emit('set-messaging-panel',{userNameGetMessage: this.friendName,userMailGetMessage: this.friendEmail});
+    }
+  },
+  mounted() {
+    
   },
 
 };
@@ -68,6 +55,7 @@ export default {
     border-radius: 30px;
     font-size: 10px;
     margin-bottom: 6px;
+    margin-left: 10px;
   }
 
   img{
@@ -77,6 +65,8 @@ export default {
   }
   .name p{
       margin: 0;
+      margin-left: 15px;
+      white-space: nowrap;
   }
   .list{
     padding-top: 4px;

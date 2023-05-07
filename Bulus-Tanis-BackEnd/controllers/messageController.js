@@ -37,7 +37,7 @@ exports.createMessage = async (req, res) => {
         const message = await Message.create(req.body);
         res.status(201).json({
             "status": true,
-            "mesaj": "Başarılı! Kullanıcı başarıyla oluşturuldu!",
+            "mesaj": "Başarılı! Mesaj başarıyla oluşturuldu!",
             "message": {
                 "userMailSendMessage": message.userMailSendMessage,
                 "userMailGetMessage": message.userMailGetMessage,

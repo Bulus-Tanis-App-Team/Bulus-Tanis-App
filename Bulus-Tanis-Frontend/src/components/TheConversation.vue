@@ -1,22 +1,20 @@
 <template>
   <div
     class="text"
-    :class="otherMsg ? 'active' : ''"
+    :class="whoSend ? 'active' : ''"
     @click="setHover"
   >
-    <p class="">{{ Text }}</p>
-
-    <button v-on:click="deleteChat(Id)" v-if="isHovering">Delete</button>
+    <p class="">{{ message }}</p>
   </div>
 </template>
 
 <script>
 export default {
-  props: ["Id", "Text", "UserId", "UserId2"],
+  props: ["mail", "message","userMail"],
 
   data() {
     return {
-      otherMsg: false,
+      whoSend: false,
       isHovering: false,
     };
   },
@@ -25,26 +23,17 @@ export default {
       setHover(){
         this.isHovering= !this.isHovering;
       },
-    setOtherMsg() {
-      if (this.UserId2 !== this.$store.getters["user/loggedUserId"]) {
-        this.otherMsg = true;
-      }
-    },
-
-    deleteChat(id) {
-      //  console.log(id)
-      fetch(`https://localhost:44313/api/delete/chat/${id}`, {
-        method: "GET",
-      }).then((response) => {
-        if (response.ok) {
-          return response.json();
-          //console.log(response)
+      whoSendMessage(){
+        if(this.mail==this.userMail){
+          this.whoSend=true;
         }
-      });
-    },
+        else{
+          this.whoSend=false;
+        }
+      },
   },
   mounted() {
-    this.setOtherMsg();
+    this.whoSendMessage();
   },
 };
 </script>

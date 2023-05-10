@@ -264,8 +264,8 @@
       </all-friends>
     </div>
 
-    <div class="col-9 convo">
-      <div class="col-12 mt-1 all-msg">
+    <div class="col-9">
+      <div class="col-12 mt-1">
         <div class="m-3">
           <img
             v-if="userNameGetMessage"
@@ -281,57 +281,43 @@
             Logout
           </button>
         </div>
-        <!-- <div class="container">
-          <form @submit.prevent="testSocket" class="w-75" action="">
-            <div class="send-msg">
-              <div>
-                <input
-                  type="text"
-                  class="form-control inpt"
-                  placeholder="Enter Your TestSocket"
-                  aria-label="Enter Your TestSocket"
-                  aria-describedby="basic-addon2"
-                  v-model="textSocket"
-                />
-              </div>
-              <div>
-                <button type="submit" class="btn btn-primary send-btn">
-                  Send Socket
-                </button>
-              </div>
-            </div>
-          </form>
-        </div> -->
-
-        <div v-if="chatterName">
+      </div>
+      <div class="chat-container">
+        <div v-if="userNameGetMessage" class="message-container">
           <the-conversation
-            v-for="x in results2"
-            :key="x.Id"
-            :Id="x.Id"
-            :text="x.text"
-            :UserId="x.UserId"
-            :UserId2="x.UserId2"
+            v-for="message in allMessagesWithFriend"
+            :key="message._id"
+            :mail="message.userMailSendMessage"
+            :message="message.message"
+            :userMail="userMail"
           ></the-conversation>
         </div>
       </div>
-
-      <form @submit.prevent="sendMsg" class="w-75" action="">
-        <div class="send-msg">
+      <div class="col-12 mt-1">
+        <form class="w-75">
           <div>
-            <input
-              type="text"
-              class="form-control inpt"
-              placeholder="Enter Your Message"
-              aria-label="Enter Your Message"
-              aria-describedby="basic-addon2"
-              v-model="text"
-            />
+            <div>
+              <input
+                type="text"
+                class="form-control inpt"
+                placeholder="Enter Your Message"
+                aria-label="Enter Your Message"
+                aria-describedby="basic-addon2"
+                v-model="message"
+              />
+            </div>
+            <div>
+              <button
+                class="btn btn-primary send-btn"
+                @click="sendMessage"
+                v-if="userMailGetMessage"
+              >
+                Gönder
+              </button>
+            </div>
           </div>
-          <div>
-            <button type="submit" class="btn btn-primary send-btn" @click="sendMessage" v-if="userMailGetMessage">Gönder</button>
-          </div>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   </div>
 </template>
@@ -371,9 +357,9 @@ export default {
       userNameGetMessage: "",
       userMailGetMessage: "",
       allMessagesWithFriend: [],
+      message: "",
       textSocket: "",
       loggedMail: "",
-      text: "",
       Id1: "",
       Id2: "",
       chatterName: "",
@@ -386,55 +372,77 @@ export default {
     //this.loggedMail = this.$store.getters["user/loggedEmail"];
     //this.GetLoggedUser();
     this.getUserInfo();
-    this.socket = io(BASE_URL,{
+    this.socket = io(BASE_URL, {
       query: {
         userMail: this.userMail,
       },
     });
-    this.socket.on('getMessage', (message) => {
-      console.log('Mesaj alındı:', message);
+    this.socket.on("getMessage", (data) => {
+      console.log("Mesaj alındı:", data);
+      // if bloğunu yazmassak olan şey:
+      // bahadır ve mehmet konusuyor
+      // ayşe bahadura mesaj attığında
+      //ayşenin mesajı bahadırın mehmetle olna chatine düşüyor // db tarafında sorun yok, mehmet bu mesahı göremez.
+      //sadece bahadır için front-end hatası oluyor.
+      if(data.userMailSendMessage == this.userMailGetMessage){        
+        this.allMessagesWithFriend.push(data);
+      }
     });
-    
+    this.socket.on("handleUpdateAllFriendsList", (data) => {
+      //console.log('Yeni biri sizi eklendi:', data.userName);
+      this.allFriends.push(data);
+    });
   },
-  methods: {  
-    async sendMessage(){
-      let getMessagesURL = BASE_URL+"/message/send";
+  methods: {
+    async sendMessage() {
+      let getMessagesURL = BASE_URL + "/message/send";
       await axios
         .post(getMessagesURL, {
           userMailSendMessage: this.userMail,
           userMailGetMessage: this.userMailGetMessage,
-          message: this.text
+          message: this.message,
         })
         .then((res) => {
-          console.log(res.data);
+          this.allMessagesWithFriend.push(res.data.message);
+          this.emitSocketSendedMessage();
+          //console.log(res.data);
         })
         .catch((e) => {
           console.log(`sendMessage err: ${e}`);
         });
     },
-    handleAddAllFriendsListEmit(data){
+    async handleAddAllFriendsListEmit(data) {
       this.allFriends.push(data);
+      //socket ile karşı tarafan çevrim içi ise biz onu eklediğimizde onun listesine düşelim.
+      //console.log("Eklemiş olduğunuz: "+data.userName+" kişisinin ekranı güncelleniyor");
+      await this.socket.emit("updateAllFriendsList", {
+        friend: data,
+        userMail: this.userMail,
+        userName: this.userName,
+      });
     },
-    async handleSetMessagingPanel({userNameGetMessage,userMailGetMessage}) {
+    async handleSetMessagingPanel({ userNameGetMessage, userMailGetMessage }) {
       this.userNameGetMessage = userNameGetMessage;
       this.userMailGetMessage = userMailGetMessage;
-      let getMessagesURL = BASE_URL+"/message/get";
+      let getMessagesURL = BASE_URL + "/message/get";
       await axios
         .post(getMessagesURL, {
           userMailSendMessage: this.userMail,
-          userMailGetMessage: this.userMailGetMessage
+          userMailGetMessage: this.userMailGetMessage,
         })
         .then((res) => {
-          this.getMessagesWithFriend = res.data;
-          console.log(res.data);
+          this.allMessagesWithFriend = res.data;
+          //console.log(res.data);
         })
         .catch((e) => {
-          console.log(`handleSetMessagingPanel : getMessagesWithFriend err: ${e}`);
+          console.log(
+            `handleSetMessagingPanel : getMessagesWithFriend err: ${e}`
+          );
         });
       //console.log("şuan mesajlaşılan kişi: Name: " + userNameGetMessage+" | Email: "+userMailGetMessage);
     },
     async getAllFriends() {
-      let getAllFriendsURL = BASE_URL+"/friends/get";
+      let getAllFriendsURL = BASE_URL + "/friends/get";
       await axios
         .post(getAllFriendsURL, {
           userMail: this.userMail,
@@ -447,15 +455,16 @@ export default {
           console.log(`getAllFriends err: ${e}`);
         });
     },
-    async testSocket() {
+    async emitSocketSendedMessage() {
       // mesajın yollanması için back-end den mesaj başarıyla geçmeli. bu nedenle nack-end e send edilen kısmın response true
       //kısmına bu kod eklenicek
-      console.log("testSocket msj: "+this.textSocket);
-      await this.socket.emit('sendMessage', {
-        userMailGetMessage: "test0@gmail.com",
-        message: this.textSocket,
+      console.log("emitSocketSendedMessage msj: " + this.message);
+      await this.socket.emit("sendMessage", {
+        userMailGetMessage: this.userMailGetMessage,
+        userMailSendMessage: this.userMail,
+        message: this.message,
       });
-      this.textSocket = '';
+      this.message = "";
     },
     updateFriendshipStatusEmit({ status, message }) {
       this.friendshipStatus = status;
@@ -717,6 +726,7 @@ export default {
   height: 100%;
 }
 .send-msg {
+  position: absolute;
   overflow: hidden;
 }
 img {
@@ -780,5 +790,28 @@ button[type="submit"]:hover {
   top: 0;
   right: 0;
   z-index: 9999;
+}
+.chat-container {
+  position: relative;
+  height: 400px; /* Mesajlar ve formun alacağı toplam yükseklik */
+  overflow-y: auto; /* Mesajları aşan içeriklerde kaydırma çubuğu görüntülenir */
+}
+
+.message-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding: 10px;
+}
+
+.message-form {
+  position: absolute;
+  height: 200px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 10px;
+  background-color: #f5f5f5;
 }
 </style>

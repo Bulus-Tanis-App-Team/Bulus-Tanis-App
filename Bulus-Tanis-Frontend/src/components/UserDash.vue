@@ -537,6 +537,7 @@ export default {
       //açıklama bitiş:
     },
     logout() {
+      localStorage.clear();
       this.$router.replace("/");
       // this.results2=[];
       // this.$store.reset();

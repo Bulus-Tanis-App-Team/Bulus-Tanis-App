@@ -53,7 +53,9 @@ io.on('connection', (socket) => {
         console.log('xxxMail:'+data.userMailGetMessage + ' | mesaj: ' + data.message);
         var socketUserGetMessage = users[data.userMailGetMessage];
         // Sadece belirli kullanıcıya mesaj gönder
-        io.to(socketUserGetMessage.id).emit('getMessage', {userMailSendMessage:data.userMailSendMessage, message: data.message});
+        if(socketUserGetMessage){
+            io.to(socketUserGetMessage.id).emit('getMessage', {userMailSendMessage:data.userMailSendMessage, message: data.message});
+        }
     });
 
     socket.on('updateAllFriendsList', async (data) => {
@@ -62,7 +64,9 @@ io.on('connection', (socket) => {
         var socketupdateAllFriendsList = users[data.friend.userMail];
         var user= await User.findOne({ userMail: data.userMail });
         //console.log(user);
-        io.to(socketupdateAllFriendsList.id).emit('handleUpdateAllFriendsList', user);
+        if(socketupdateAllFriendsList){            
+            io.to(socketupdateAllFriendsList.id).emit('handleUpdateAllFriendsList', user);
+        }
         //console.log('handleUpdateAllFriendsList , user ifadesi gönderildi.');
         //console.log('---updateAllFriendsList---');
     });

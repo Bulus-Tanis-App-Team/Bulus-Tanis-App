@@ -8,6 +8,7 @@ const MessageRoute = require('./routes/messageRoute');
 const FriendsRoute = require('./routes/friendsRoute');
 const SearchRoute = require('./routes/searchRoute');
 const mongoConfig = require('./app.config');
+const User = require('./models/User');
 
 const app = express();
 app.use(cors({
@@ -52,7 +53,18 @@ io.on('connection', (socket) => {
         console.log('xxxMail:'+data.userMailGetMessage + ' | mesaj: ' + data.message);
         var socketUserGetMessage = users[data.userMailGetMessage];
         // Sadece belirli kullanıcıya mesaj gönder
-        io.to(socketUserGetMessage.id).emit('getMessage', data.message);
+        io.to(socketUserGetMessage.id).emit('getMessage', {userMailSendMessage:data.userMailSendMessage, message: data.message});
+    });
+
+    socket.on('updateAllFriendsList', async (data) => {
+        //console.log('---updateAllFriendsList---');
+        //console.log(data);
+        var socketupdateAllFriendsList = users[data.friend.userMail];
+        var user= await User.findOne({ userMail: data.userMail });
+        //console.log(user);
+        io.to(socketupdateAllFriendsList.id).emit('handleUpdateAllFriendsList', user);
+        //console.log('handleUpdateAllFriendsList , user ifadesi gönderildi.');
+        //console.log('---updateAllFriendsList---');
     });
 });
 

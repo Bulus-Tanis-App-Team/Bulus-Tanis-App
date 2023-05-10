@@ -72,7 +72,7 @@ export default {
       friendshipStatus: false,
       friendshipMesaj:"",
       createFriendShipURL: "",
-      friendMail: "",
+      token: "",
     };
   },
   created() {
@@ -82,11 +82,11 @@ export default {
   methods: {
     async createFriendShip() {
       this.createFriendShipURL = BASE_URL + "/friends/create";
-      this.friendMail = JSON.parse(localStorage.getItem("userMail"));
+      this.token = JSON.parse(localStorage.getItem("token"));
       await axios
         .post(this.createFriendShipURL, {
           userMail: this.userMail,
-          friendMail: this.friendMail,
+          token: this.token,
         })
         .then((res) => {
           let info = res.data;          

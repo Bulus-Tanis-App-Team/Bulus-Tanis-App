@@ -2,12 +2,14 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const socket = require('socket.io');
+const jwt = require('jsonwebtoken');
 
 const AuthRoute = require('./routes/authRoute');
 const MessageRoute = require('./routes/messageRoute');
 const FriendsRoute = require('./routes/friendsRoute');
 const SearchRoute = require('./routes/searchRoute');
 const mongoConfig = require('./app.config');
+const { secureKey } = require('./app.config');
 const User = require('./models/User');
 
 const app = express();
@@ -16,6 +18,10 @@ app.use(cors({
     methods: 'GET, POST',
     allowedHeaders: 'Content-Type, Authorization'
   }));
+
+mongoose.set('strictQuery', false);// ileride mongo db güncellenince bu değer default false olucak
+//gelcek güncellemede bu satır silinecek
+//ileride sorun yaşmama için bu satır eklendi
 
 mongoose.connect(mongoConfig.connectionString).then(() => {
     console.log("db connected");
@@ -40,8 +46,17 @@ const io = socket(server,{
 const users = {};
 io.on('connection', (socket) => {
 
-    console.log('Bir kullanıcı bağlandı: '+socket.id + ' | mail: ' + socket.handshake.query.userMail);
-    const userMail= socket.handshake.query.userMail;
+    var decoded;
+    var userData;
+    var userMail;
+    try {               
+        decoded = jwt.verify(socket.handshake.query.token,secureKey);
+        userData = decoded;
+        userMail = userData.userMail;
+    } catch (error) {
+        console.log(error+" | connection main socket token err");
+    }
+    console.log('Bir kullanıcı bağlandı: '+socket.id + ' | mail: ' + userMail);
     users[userMail] = socket;
 
     socket.on('disconnect', () => {
@@ -62,7 +77,15 @@ io.on('connection', (socket) => {
         //console.log('---updateAllFriendsList---');
         //console.log(data);
         var socketupdateAllFriendsList = users[data.friend.userMail];
-        var user= await User.findOne({ userMail: data.userMail });
+        var decodedUser;
+        var newFriend;
+        try {               
+            decodedUser = jwt.verify(data.token,secureKey);
+            newFriend = decoded;
+        } catch (error) {
+            console.log(error+" | updateAllFriendsList socket token err");
+        }        
+        var user= await User.findOne({ userMail: newFriend.userMail });
         //console.log(user);
         if(socketupdateAllFriendsList){            
             io.to(socketupdateAllFriendsList.id).emit('handleUpdateAllFriendsList', user);

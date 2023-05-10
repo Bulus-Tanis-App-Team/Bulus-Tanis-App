@@ -42,13 +42,13 @@
         class="modal fade"
         id="modalsearch"
         tabindex="-1"
-        aria-labelledby="exampleModalLabel"
+        aria-labelledby="exampleModalLabelKonumAra"
         aria-hidden="true"
       >
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Konum Ara</h5>
+              <h5 class="modal-title" id="exampleModalLabelKonumAra">Konum Ara</h5>
               <button
                 type="button"
                 class="btn-close"
@@ -57,11 +57,11 @@
               ></button>
             </div>
             <div class="modal-body" id="konumAraModalBody">
-              <form>
+              <form @submit.prevent="getSearchingUsers">
                 <label for="searchingCountry">Ülke:</label>
                 <input
                   type="text"
-                  id="searchingCity"
+                  id="searchingCountry"
                   v-model.trim="searchingCountry"
                 /><br />
 
@@ -86,7 +86,7 @@
                   v-model.trim="searchingNeighbourhood"
                 /><br />
 
-                <button type="submit" @click="getSearchingUsers">Ara</button>
+                <button type="submit">Ara</button>
               </form>
             </div>
             <div
@@ -94,7 +94,7 @@
               id="searchedUserModalBody"
               style="display: none"
             >
-              <button class="btn btn-secondary" @click="backSearchingUsers">
+              <button type="button" class="btn btn-secondary" @click="backSearchingUsers">
                 Geri
               </button>
               <searched-user
@@ -121,13 +121,13 @@
         class="modal fade"
         id="modalprofile"
         tabindex="-1"
-        aria-labelledby="exampleModalLabel"
+        aria-labelledby="exampleModalLabelProfil"
         aria-hidden="true"
       >
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Profil</h5>
+              <h5 class="modal-title" id="exampleModalLabelProfil">Profil</h5>
               <button
                 type="button"
                 class="btn-close"
@@ -198,13 +198,13 @@
         class="modal fade"
         id="modalupdate"
         tabindex="-1"
-        aria-labelledby="exampleModalLabel"
+        aria-labelledby="exampleModalLabelUpdt"
         aria-hidden="true"
       >
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">
+              <h5 class="modal-title" id="exampleModalLabelUpdt">
                 Profil Değişiklik Yap
               </h5>
               <button
@@ -217,22 +217,22 @@
             <div class="modal-body">
               <form>
                 <label for="name">Profil İsmi:</label>
-                <input type="text" id="name" name="name" /><br />
+                <input type="text" id="nameUpdt" name="nameUpdt" /><br />
 
                 <label for="country">Ülke:</label>
-                <input type="text" id="country" name="country" /><br />
+                <input type="text" id="countryUpdt" name="countryUpdt" /><br />
 
                 <label for="city">Şehir:</label>
-                <input type="text" id="city" name="city" /><br />
+                <input type="text" id="cityUpdt" name="cityUpdt" /><br />
 
                 <label for="district">İlçe:</label>
-                <input type="text" id="district" name="district" /><br />
+                <input type="text" id="districtUpdt" name="districtUpdt" /><br />
 
-                <label for="neighborhood">Mahalle:</label>
+                <label for="neighborhoodUpdt">Mahalle:</label>
                 <input
                   type="text"
-                  id="neighborhood"
-                  name="neighborhood"
+                  id="neighborhoodUpdt"
+                  name="neighborhoodUpdt"
                 /><br />
 
                 <div class="mb-3">
@@ -240,8 +240,8 @@
                   <input
                     class="form-control"
                     type="file"
-                    id="image"
-                    name="image"
+                    id="imageUpdt"
+                    name="imageUpdt"
                   />
                 </div>
 
@@ -294,7 +294,7 @@
         </div>
       </div>
       <div class="col-12 mt-1">
-        <form class="w-75">
+        <form class="w-75" @submit.prevent="sendMessage">
           <div>
             <div>
               <input
@@ -309,7 +309,6 @@
             <div>
               <button
                 class="btn btn-primary send-btn"
-                @click="sendMessage"
                 v-if="userMailGetMessage"
               >
                 Gönder
@@ -337,8 +336,7 @@ export default {
   },
   data() {
     return {
-      results: [],
-      results2: [],
+      token: "",
       userName: "",
       userMail: "",
       userCountry: "",
@@ -358,11 +356,6 @@ export default {
       userMailGetMessage: "",
       allMessagesWithFriend: [],
       message: "",
-      textSocket: "",
-      loggedMail: "",
-      Id1: "",
-      Id2: "",
-      chatterName: "",
     };
   },
 
@@ -374,7 +367,7 @@ export default {
     this.getUserInfo();
     this.socket = io(BASE_URL, {
       query: {
-        userMail: this.userMail,
+        token: this.token,
       },
     });
     this.socket.on("getMessage", (data) => {
@@ -398,7 +391,7 @@ export default {
       let getMessagesURL = BASE_URL + "/message/send";
       await axios
         .post(getMessagesURL, {
-          userMailSendMessage: this.userMail,
+          token: this.token,
           userMailGetMessage: this.userMailGetMessage,
           message: this.message,
         })
@@ -417,7 +410,7 @@ export default {
       //console.log("Eklemiş olduğunuz: "+data.userName+" kişisinin ekranı güncelleniyor");
       await this.socket.emit("updateAllFriendsList", {
         friend: data,
-        userMail: this.userMail,
+        token: this.token,
         userName: this.userName,
       });
     },
@@ -427,7 +420,7 @@ export default {
       let getMessagesURL = BASE_URL + "/message/get";
       await axios
         .post(getMessagesURL, {
-          userMailSendMessage: this.userMail,
+          token: this.token,
           userMailGetMessage: this.userMailGetMessage,
         })
         .then((res) => {
@@ -445,7 +438,7 @@ export default {
       let getAllFriendsURL = BASE_URL + "/friends/get";
       await axios
         .post(getAllFriendsURL, {
-          userMail: this.userMail,
+          token: this.token,
         })
         .then((res) => {
           this.allFriends = res.data;
@@ -495,6 +488,7 @@ export default {
       }, 5000);
     },
     backSearchingUsers() {
+
       document.getElementById("konumAraModalBody").style.display = "block";
       document.getElementById("searchedUserModalBody").style.display = "none";
     },
@@ -529,6 +523,7 @@ export default {
       this.userNeighbourhood = JSON.parse(
         localStorage.getItem("userNeighbourhood")
       );
+      this.token=JSON.parse(localStorage.getItem("token"));
       //açıklama başla: genelde önce kendi konumumuzdaki kişileri arama eğilimindeyiz bu sebeple kendi konumumuz default olarak aranacak konuma atanır.
       this.searchingCountry = this.userCountry;
       this.searchingCity = this.userCity;

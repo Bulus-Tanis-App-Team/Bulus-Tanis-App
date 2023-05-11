@@ -10,8 +10,8 @@ exports.createMessage = async (req, res) => {
         const userMail=req.userData.userMail;
         const friendMail=req.body.userMailGetMessage;
 
-        const userMailSendMessage = await User.findOne({ userMail: userMail })
-        const userMailGetMessage = await User.findOne({ userMail: friendMail })
+        const userMailSendMessage = await User.findOne({ userMail: userMail },{userPassword:0})
+        const userMailGetMessage = await User.findOne({ userMail: friendMail },{userPassword:0})
         if (!userMailSendMessage) {
             res.send({
                 "mesaj": `userMailSendMessage adresi veri tabanında yok: ${userMail}`
@@ -64,8 +64,8 @@ exports.getMessages = async (req, res) => {
         //kontrol-0 release sürümde sil - start
         const userMailSendMessage=req.userData.userMail;
         const userMailGetMessage=req.body.userMailGetMessage;
-        const userSendMessage = await User.findOne({ userMail: userMailSendMessage })
-        const userGetMessage = await User.findOne({ userMail: userMailGetMessage })
+        const userSendMessage = await User.findOne({ userMail: userMailSendMessage },{userPassword:0})
+        const userGetMessage = await User.findOne({ userMail: userMailGetMessage },{userPassword:0})
         if (!userSendMessage) {
             res.send({
                 "mesaj": `userMailSendMessage adresi veri tabanında yok: ${userMailSendMessage}`

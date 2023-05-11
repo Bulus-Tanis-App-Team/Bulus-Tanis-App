@@ -8,25 +8,25 @@ exports.searchUser = async (req, res) => {
                 {userCountry:req.body.searchingCountry},
                 {userCity:req.body.searchingCity},
                 {userDistrict:req.body.searchingDistrict},
-                {userNeighbourhood:req.body.searchingNeighbourhood}]});
+                {userNeighbourhood:req.body.searchingNeighbourhood}]},{userPassword:0});
             res.status(201).json(users);
             return;
         }else if(req.body.searchingCountry && req.body.searchingCity && req.body.searchingDistrict){            
             const users = await User.find({$and:[
                 {userCountry:req.body.searchingCountry}
                 ,{userCity:req.body.searchingCity}
-                ,{userDistrict:req.body.searchingDistrict}]});
+                ,{userDistrict:req.body.searchingDistrict}]},{userPassword:0});
             //console.log(users);
             res.status(201).json(users);
             return;
         }else if(req.body.searchingCountry && req.body.searchingCity){
             const users = await User.find({$and:[
                 {userCountry:req.body.searchingCountry},
-                {userCity:req.body.searchingCity}]});            
+                {userCity:req.body.searchingCity}]},{userPassword:0});            
             //console.log(users);
             res.status(201).json(users);
         }else if(req.body.searchingCountry){
-            const users = await User.find({country:req.body.searchingCountry});
+            const users = await User.find({country:req.body.searchingCountry},{userPassword:0});
             res.status(201).json(users);
         }else{
             res.send({

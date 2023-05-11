@@ -11,6 +11,7 @@ const SearchRoute = require('./routes/searchRoute');
 const mongoConfig = require('./app.config');
 const { secureKey } = require('./app.config');
 const User = require('./models/User');
+const Friends = require('./models/Friends');
 
 const app = express();
 app.use(cors({
@@ -64,12 +65,19 @@ io.on('connection', (socket) => {
         delete users[userMail];
     });
 
-    socket.on('sendMessage', (data) => {
+    socket.on('sendMessage', async (data) => {
         console.log('xxxMail:'+data.userMailGetMessage + ' | mesaj: ' + data.message);
         var socketUserGetMessage = users[data.userMailGetMessage];
         // Sadece belirli kullanıcıya mesaj gönder
         if(socketUserGetMessage){
-            io.to(socketUserGetMessage.id).emit('getMessage', {userMailSendMessage:data.userMailSendMessage, message: data.message});
+            //bu kullanıcı aktif, mesajı gönder
+            //bu kullanıcı gerçekten arkadaşım olmayabilir sistemin güvenliğini atlatmış olabilirim.
+            //bu yüzden veri tabanından kontrol etmeliyim.
+            const isFriend = await Friends.findOne({ userMail: userMail ,friendMail: data.userMailGetMessage });
+            if(isFriend){
+                io.to(socketUserGetMessage.id).emit('getMessage', {userMailSendMessage:data.userMailSendMessage, message: data.message});
+            }
+            
         }
     });
 
@@ -85,7 +93,7 @@ io.on('connection', (socket) => {
         } catch (error) {
             console.log(error+" | updateAllFriendsList socket token err");
         }        
-        var user= await User.findOne({ userMail: newFriend.userMail });
+        var user= await User.findOne({ userMail: newFriend.userMail },{userPassword:0});
         //console.log(user);
         if(socketupdateAllFriendsList){            
             io.to(socketupdateAllFriendsList.id).emit('handleUpdateAllFriendsList', user);

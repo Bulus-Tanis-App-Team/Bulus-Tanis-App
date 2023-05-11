@@ -23,7 +23,8 @@ exports.createFriends = async (req, res) => {
         }
         const friend1 = await Friends.create({ userMail: tempUserMail, friendMail: tempFriendMail });
         const friend2 = await Friends.create({ userMail: tempFriendMail, friendMail: tempUserMail });
-        const newFriendInfo = await User.findOne({ userMail: tempUserMail });
+        const newFriendInfo = await User.findOne({ userMail: tempUserMail },{userPassword:0});
+        console.log(newFriendInfo);
         res.status(201).json({
             "status": true,
             "mesaj": "Başarılı! Arkadaşlık başarıyla oluşturuldu!",
@@ -48,7 +49,7 @@ exports.getFriends = async (req, res) => {
         for (let i = 0; i < friends.length; i++) {
             const friend = friends[i];
             //console.log(friend);
-            const temp = await User.findOne({ userMail: friend.friendMail });
+            const temp = await User.findOne({ userMail: friend.friendMail },{userPassword:0});
             //console.log(temp);
             FriendsExtended.push(temp);
         }

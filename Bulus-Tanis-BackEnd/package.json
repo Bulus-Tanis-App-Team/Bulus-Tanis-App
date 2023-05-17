@@ -1,7 +1,7 @@
 {
   "name": "authbackend",
-  "version": "1.0.0",
-  "description": "Mobile Programming lesson backend project",
+  "version": "2.0.0",
+  "description": "Software Engineering Lessons Project",
   "main": "app.js",
   "scripts": {
     "serve": "nodemon app.js",
@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Mobile-Authentication-Team/AuthBackend.git"
+    "url": "git+https://github.com/Bulus-Tanis-App-Team/Bulus-Tanis-App/tree/main/Bulus-Tanis-BackEnd.git"
   },
-  "author": "Deniz Erdem",
+  "author": "Bahadir Aksakal",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Mobile-Authentication-Team/AuthBackend/issues"
+    "url": "https://github.com/Bulus-Tanis-App-Team/Bulus-Tanis-App/tree/main/Bulus-Tanis-BackEnd/issues"
   },
-  "homepage": "https://github.com/Mobile-Authentication-Team/AuthBackend#readme",
+  "homepage": "https://github.com/Bulus-Tanis-App-Team/Bulus-Tanis-App/blob/main/README.md",
   "dependencies": {
     "bcrypt": "^5.1.0",
     "cors": "^2.8.5",

@@ -39,7 +39,12 @@ exports.loginUser = async (req, res) => {
             const cmp = await bcrypt.compare(req.body.userPassword, user.userPassword);
             if (cmp) {
                 const token = jwt.sign({
-                    userMail: user.userMail
+                    userName: user.userName,
+                    userMail: user.userMail,
+                    userCountry: user.userCountry,
+                    userCity: user.userCity,
+                    userDistrict: user.userDistrict,    
+                    userNeighbourhood: user.userNeighbourhood
                 }, secureKey, { expiresIn: '1h' })
                 res.send({
                     "mesaj": "Auth Success",

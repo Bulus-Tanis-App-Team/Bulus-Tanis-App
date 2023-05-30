@@ -102,6 +102,12 @@ Eğer bu projede yer almak ve daha fazla bilgi almak isterseniz, lütfen bizler 
         <li>Ahmet Bahadır Aksakal </li>
     </ul>
   </li>
+   <li>
+      <h3 color="Red">Proje Tanıtım Videosu:</h3>     
+      <ul>
+	    <li><video src='[video1.mov](https://github.com/Bulus-Tanis-App-Team/Bulus-Tanis-App/assets/72493865/1a0bdbab-466d-4234-b9fa-fc12f18a9b45)' width=180/></li>
+      </ul>
+  </li>
   <li>
       <h3 color="Red">Programdan Görseller:</h3>
       <ul>        
@@ -111,9 +117,6 @@ Eğer bu projede yer almak ve daha fazla bilgi almak isterseniz, lütfen bizler 
        <li><img src="/img/4.png"> Profil Sayfası Ve Bilgileri Güncelleme </li>
       </ul>
   </li>	
-  <li>
-      <h3 color="Red">Proje Tanıtım Videosu:</h3>        
-  </li>
 </ol>
-https://github.com/Bulus-Tanis-App-Team/Bulus-Tanis-App/assets/72493865/1a0bdbab-466d-4234-b9fa-fc12f18a9b45
+
 

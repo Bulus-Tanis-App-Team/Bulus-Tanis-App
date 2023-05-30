@@ -105,7 +105,10 @@ Eğer bu projede yer almak ve daha fazla bilgi almak isterseniz, lütfen bizler 
   <li>
       <h3 color="Red">Programdan Görseller:</h3>
       <ul>        
-        <li><img src=""> Görsel Örnek -1 </li>
+        <li><img src="/img/1.png"> Mesajlaşma </li>
+       <li><img src="/img/2.png"> Konum Arama </li>
+       <li><img src="/img/3.png"> Konuma Göre Arkadaş Ekleme </li>
+       <li><img src="/img/4.png"> Profil Sayfası Ve Bilgileri Güncelleme </li>
       </ul>
   </li>
 </ol>

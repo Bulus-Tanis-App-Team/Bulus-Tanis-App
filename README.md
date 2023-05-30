@@ -103,11 +103,9 @@ Eğer bu projede yer almak ve daha fazla bilgi almak isterseniz, lütfen bizler 
     </ul>
   </li>
   <li>
-      <h3 color="Red">Proje Tanıtım Videosu:</h3>
-      <ul>
-        https://github.com/Bulus-Tanis-App-Team/Bulus-Tanis-App/assets/72493865/2732130f-ed16-4552-9605-8ee9169ba8bb
-    </ul>
+      <h3 color="Red">Proje Tanıtım Videosu:</h3>        
   </li>
+	https://github.com/Bulus-Tanis-App-Team/Bulus-Tanis-App/assets/72493865/2732130f-ed16-4552-9605-8ee9169ba8bb
   <li>
       <h3 color="Red">Programdan Görseller:</h3>
       <ul>        

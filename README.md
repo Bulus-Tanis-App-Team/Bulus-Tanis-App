@@ -105,7 +105,7 @@ Eğer bu projede yer almak ve daha fazla bilgi almak isterseniz, lütfen bizler 
    <li>
       <h3 color="Red">Proje Tanıtım Videosu:</h3>     
       <ul>
-	    <li><video src='[video1.mov](https://github.com/Bulus-Tanis-App-Team/Bulus-Tanis-App/assets/72493865/1a0bdbab-466d-4234-b9fa-fc12f18a9b45)' width=180/></li>
+	    <li><video src='https://github.com/Bulus-Tanis-App-Team/Bulus-Tanis-App/assets/72493865/1a0bdbab-466d-4234-b9fa-fc12f18a9b45' width=180/></li>
       </ul>
   </li>
   <li>

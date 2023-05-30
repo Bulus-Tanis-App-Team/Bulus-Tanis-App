@@ -103,6 +103,12 @@ Eğer bu projede yer almak ve daha fazla bilgi almak isterseniz, lütfen bizler 
     </ul>
   </li>
   <li>
+      <h3 color="Red">Proje Tanıtım Videosu:</h3>
+      <ul>
+        <li>Proje Tanıtım Videosu</li>
+    </ul>
+  </li>
+  <li>
       <h3 color="Red">Programdan Görseller:</h3>
       <ul>        
         <li><img src="/img/1.png"> Mesajlaşma </li>

@@ -103,10 +103,6 @@ Eğer bu projede yer almak ve daha fazla bilgi almak isterseniz, lütfen bizler 
     </ul>
   </li>
   <li>
-      <h3 color="Red">Proje Tanıtım Videosu:</h3>        
-  </li>
-	https://github.com/Bulus-Tanis-App-Team/Bulus-Tanis-App/assets/72493865/2732130f-ed16-4552-9605-8ee9169ba8bb
-  <li>
       <h3 color="Red">Programdan Görseller:</h3>
       <ul>        
         <li><img src="/img/1.png"> Mesajlaşma </li>
@@ -114,5 +110,10 @@ Eğer bu projede yer almak ve daha fazla bilgi almak isterseniz, lütfen bizler 
        <li><img src="/img/3.png"> Konuma Göre Arkadaş Ekleme </li>
        <li><img src="/img/4.png"> Profil Sayfası Ve Bilgileri Güncelleme </li>
       </ul>
+  </li>	
+  <li>
+      <h3 color="Red">Proje Tanıtım Videosu:</h3>        
   </li>
 </ol>
+https://github.com/Bulus-Tanis-App-Team/Bulus-Tanis-App/assets/72493865/1a0bdbab-466d-4234-b9fa-fc12f18a9b45
+
